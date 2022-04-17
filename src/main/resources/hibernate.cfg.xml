@@ -8,5 +8,14 @@
         <property name="hibernate.connection.password">10diemweb@</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/coursedb</property>
         <property name="hibernate.connection.username">root</property>
+        
+        <mapping class="com.thidinhxm.entities.Attendance"/>
+        <mapping class="com.thidinhxm.entities.Period"/>
+        <mapping class="com.thidinhxm.entities.Room"/>
+        <mapping class="com.thidinhxm.entities.Staff"/>
+        <mapping class="com.thidinhxm.entities.Student"/>
+        <mapping class="com.thidinhxm.entities.Course"/>
+        <mapping class="com.thidinhxm.entities.StudentCourse"/>
+        <mapping class="com.thidinhxm.entities.Subject"/>
     </session-factory>
 </hibernate-configuration>
