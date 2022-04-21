@@ -28,6 +28,9 @@ public class Student implements Serializable{
 	@OneToMany(mappedBy="student", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Set<StudentCourse> studentCourse = new HashSet<StudentCourse>();
 	
+	public Student() {
+	}
+	
 	public Student(String studentId, String username, String password, String fullname, Date dateOfBirth, String gender) {
 		this.studentId = studentId;
 		this.username = username;
