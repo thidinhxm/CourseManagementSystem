@@ -25,6 +25,9 @@ public class Subject implements Serializable {
 	@OneToMany(mappedBy="subject", cascade=CascadeType.ALL)
 	private Set<Course> courses;
 	
+	public Subject() {
+	}
+	
 	public Subject(String subjectId, String subjectName, Integer credits) {
 		super();
 		this.subjectId = subjectId;

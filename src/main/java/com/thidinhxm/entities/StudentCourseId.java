@@ -17,6 +17,9 @@ public class StudentCourseId implements Serializable {
 	
 	@Column(name="courseId")
 	private Integer courseId;
+	
+	public StudentCourseId() {
+	}
 
 	public StudentCourseId(String studentId, int courseId) {
 		this.studentId = studentId;

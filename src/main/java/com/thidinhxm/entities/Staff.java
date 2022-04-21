@@ -30,6 +30,9 @@ public class Staff implements Serializable {
 	@Column(name="gender", length=255, nullable=false)
 	private String gender;
 	
+	public Staff() {
+	}
+	
 	public Staff(String staffId, String username, String password, String fullname, Date dateOfBirth, String gender) {
 		this.staffId = staffId;
 		this.username = username;

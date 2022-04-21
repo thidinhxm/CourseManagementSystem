@@ -32,11 +32,14 @@ public class StudentCourse implements Serializable{
 	@JoinColumn(name="courseId")
 	private Course course;
 	
-	@Column(name="point")
-	private float point;
+	@Column(name="point", nullable=true)
+	private Float point;
 	
 	@OneToMany(mappedBy="studentCourse", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Set<Attendance> attendances = new HashSet<Attendance>();
+	
+	public StudentCourse() {
+	}
 	
 	public StudentCourse(Student student, Course course) {
 		this.student = student;
@@ -67,11 +70,11 @@ public class StudentCourse implements Serializable{
 		this.course = course;
 	}
 
-	public float getPoint() {
+	public Float getPoint() {
 		return point;
 	}
 
-	public void setPoint(float point) {
+	public void setPoint(Float point) {
 		this.point = point;
 	}
 	

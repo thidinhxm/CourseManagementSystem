@@ -1,7 +1,5 @@
 package com.thidinhxm.ui.student;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,6 +8,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
+import com.thidinhxm.entities.Student;
 import com.thidinhxm.ui.partials.HeaderPanel;
 
 import java.awt.CardLayout;
@@ -18,26 +17,8 @@ public class StudentScreen extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StudentScreen frame = new StudentScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the frame.
-	 */
-	public StudentScreen() {
+	public StudentScreen(Student student) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 650);
 		contentPane = new JPanel();
@@ -46,7 +27,7 @@ public class StudentScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		HeaderPanel headerPane = new HeaderPanel("Xuân Thi");
+		HeaderPanel headerPane = new HeaderPanel(student.getFullname());
 		headerPane.setLocation(20, 10);
 		contentPane.add(headerPane);
 		
@@ -112,5 +93,7 @@ public class StudentScreen extends JFrame {
 //		CoursePanel coursePane2 = new CoursePanel();
 		mainPane.add(coursePane);
 //		mainPane.add(coursePane2);
+		
+		this.setVisible(true);
 	}
 }

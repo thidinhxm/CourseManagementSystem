@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.thidinhxm.entities.Staff;
 import com.thidinhxm.ui.partials.AccountPanel;
 import com.thidinhxm.ui.partials.HeaderPanel;
 
@@ -19,26 +20,7 @@ public class StaffScreen extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StaffScreen frame = new StaffScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
-	public StaffScreen() {
+	public StaffScreen(Staff staff) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 650);
 		contentPane = new JPanel();
@@ -47,7 +29,7 @@ public class StaffScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		HeaderPanel headerPane = new HeaderPanel("Xuân Thi");
+		HeaderPanel headerPane = new HeaderPanel(staff.getFullname());
 		headerPane.setLocation(20, 10);
 		contentPane.add(headerPane);
 		

@@ -1,54 +1,41 @@
 package com.thidinhxm.ui.partials;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
-import javax.swing.JDesktopPane;
-import javax.swing.Box;
-import java.awt.Component;
-import java.awt.Dimension;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+
+import com.thidinhxm.daos.StaffDAO;
+import com.thidinhxm.daos.StudentDAO;
+import com.thidinhxm.entities.Staff;
+import com.thidinhxm.entities.Student;
+import com.thidinhxm.ui.staff.StaffScreen;
+import com.thidinhxm.ui.student.StudentScreen;
+
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LoginScreen extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField inputUsername;
 	private JPasswordField inputPassword;
-	private JTextField txtLogin;
+	private JTextField txtUsername;
 	private JTextField txtPassword;
 	private JTextField txtTypeUser;
+	private JComboBox<String> comboBoxUserType;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginScreen frame = new LoginScreen();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public LoginScreen() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 650);
@@ -77,6 +64,12 @@ public class LoginScreen extends JFrame {
 		contentPane.add(lblInformation);
 		
 		JButton btnLogin = new JButton("Đăng nhập");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				handleBtnLoginClick();
+			}
+		});
+		
 		btnLogin.setForeground(new Color(255, 255, 255));
 		btnLogin.setBackground(new Color(25, 25, 112));
 		btnLogin.setFont(new Font("Tahoma", Font.BOLD, 16));
@@ -104,17 +97,17 @@ public class LoginScreen extends JFrame {
 		inputPassword.setBorder(new LineBorder(new Color(25, 25, 112)));
 		contentPane.add(inputPassword);
 		
-		txtLogin = new JTextField();
-		txtLogin.setForeground(new Color(255, 255, 255));
-		txtLogin.setHorizontalAlignment(SwingConstants.CENTER);
-		txtLogin.setEditable(false);
-		txtLogin.setBackground(new Color(25, 25, 112));
-		txtLogin.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		txtLogin.setText("Tên đăng nhập");
-		txtLogin.setBounds(625, 249, 159, 37);
-		txtLogin.setBorder(new LineBorder(new Color(25, 25, 112)));
-		contentPane.add(txtLogin);
-		txtLogin.setColumns(10);
+		txtUsername = new JTextField();
+		txtUsername.setForeground(new Color(255, 255, 255));
+		txtUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		txtUsername.setEditable(false);
+		txtUsername.setBackground(new Color(25, 25, 112));
+		txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		txtUsername.setText("Tên đăng nhập");
+		txtUsername.setBounds(625, 249, 159, 37);
+		txtUsername.setBorder(new LineBorder(new Color(25, 25, 112)));
+		contentPane.add(txtUsername);
+		txtUsername.setColumns(10);
 		
 		txtPassword = new JTextField();
 		txtPassword.setForeground(new Color(255, 255, 255));
@@ -140,7 +133,7 @@ public class LoginScreen extends JFrame {
 		txtTypeUser.setBounds(625, 385, 159, 37);
 		contentPane.add(txtTypeUser);
 		
-		JComboBox<String> comboBoxUserType = new JComboBox<String>();
+		comboBoxUserType = new JComboBox<String>();
 		comboBoxUserType.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		comboBoxUserType.addItem("Học sinh");
 		comboBoxUserType.addItem("Giáo vụ");
@@ -150,7 +143,39 @@ public class LoginScreen extends JFrame {
 		comboBoxUserType.setBounds(807, 385, 264, 37);
 		contentPane.add(comboBoxUserType);
 		
+		this.setVisible(true);
+	}
+	
+	private void handleBtnLoginClick() {
+		String username = inputUsername.getText();
+		String password = new String(inputPassword.getPassword());
+		String userType = comboBoxUserType.getSelectedItem() + "";
 		
+		if (username.equals("") || password.equals("")) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
+			return;
+		}
 		
+		if (userType.equals("Học sinh")) {
+			Student student = StudentDAO.getStudentByUsernameAndPassword(username, password);
+			if (student != null) {
+				JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+				this.setVisible(false);
+				this.dispose();
+				StudentScreen screen = new StudentScreen(student);
+				return;
+			}
+			
+		}
+		else {
+			Staff staff = StaffDAO.getStaffByUsernameAndPassword(username, password);
+			if (staff != null) {
+				this.setVisible(false);
+				this.dispose();
+				new StaffScreen(staff);
+				return;
+			}
+		}
+		JOptionPane.showMessageDialog(this, "Tên tài khoản hoặc mật khẩu không đúng!");
 	}
 }

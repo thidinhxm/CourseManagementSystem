@@ -41,6 +41,9 @@ public class Course implements Serializable {
 	@OneToMany(mappedBy="course", cascade= CascadeType.ALL, orphanRemoval=true)
 	private Set<StudentCourse> studentCourse = new HashSet<StudentCourse>();
 
+	public Course() {
+	}
+	
 	public Course(String courseName, Date dateStart, Date dateEnd, Period periodStart, Period periodEnd, Room room,
 			Subject subject) {
 		super();
