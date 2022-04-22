@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -21,20 +22,21 @@ public class Course implements Serializable {
 	private String courseName;
 	private Date dateStart;
 	private Date dateEnd;
+	private String dayInWeek;
 	
-	@ManyToOne
-	@JoinColumn(name="periodId", insertable=false, updatable=false)
-	private Period periodStart;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="periodIdStart", insertable=false, updatable=false)
+	private Period periodIdStart;
 	
-	@ManyToOne
-	@JoinColumn(name="periodId", insertable=false, updatable=false)
-	private Period periodEnd;
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="periodIdEnd", insertable=false, updatable=false)
+	private Period periodIdEnd;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="roomId")
 	private Room room;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="subjectId")
 	private Subject subject;
 	
@@ -44,14 +46,15 @@ public class Course implements Serializable {
 	public Course() {
 	}
 	
-	public Course(String courseName, Date dateStart, Date dateEnd, Period periodStart, Period periodEnd, Room room,
+	public Course(String courseName, Date dateStart, Date dateEnd, String dayInWeek, Period periodIdStart, Period periodIdEnd, Room room,
 			Subject subject) {
 		super();
 		this.courseName = courseName;
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
-		this.periodStart = periodStart;
-		this.periodEnd = periodEnd;
+		this.dayInWeek = dayInWeek;
+		this.periodIdStart = periodIdStart;
+		this.periodIdEnd = periodIdEnd;
 		this.room = room;
 		this.subject = subject;
 	}
@@ -87,21 +90,29 @@ public class Course implements Serializable {
 	public void setDateEnd(Date dateEnd) {
 		this.dateEnd = dateEnd;
 	}
-
-	public Period getPeriodStart() {
-		return periodStart;
+	
+	public String getDayInWeek() {
+		return dayInWeek;
+	}
+	
+	public void setDayInWeek(String dayInWeek) {
+		this.dayInWeek = dayInWeek;
 	}
 
-	public void setPeriodStart(Period periodStart) {
-		this.periodStart = periodStart;
+	public Period getPeriodIdStart() {
+		return periodIdStart;
 	}
 
-	public Period getPeriodEnd() {
-		return periodEnd;
+	public void setPeriodIdStart(Period periodIdStart) {
+		this.periodIdStart = periodIdStart;
 	}
 
-	public void setPeriodEnd(Period periodEnd) {
-		this.periodEnd = periodEnd;
+	public Period getPeriodIdEnd() {
+		return periodIdEnd;
+	}
+
+	public void setPeriodIdEnd(Period periodIdEnd) {
+		this.periodIdEnd = periodIdEnd;
 	}
 
 	public Room getRoom() {

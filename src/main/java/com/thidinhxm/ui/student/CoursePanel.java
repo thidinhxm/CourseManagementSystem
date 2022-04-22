@@ -6,10 +6,31 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import com.thidinhxm.entities.Attendance;
+import com.thidinhxm.entities.Course;
+import com.thidinhxm.entities.StudentCourse;
+import com.thidinhxm.utils.DateTimeUtil;
 
 public class CoursePanel extends JPanel {
+
+	private JLabel lblTitle;
+	private JLabel lblDateStart;
+	private JLabel lblDateEnd;
+	private JLabel lblDateLearn;
+	private JLabel lblTimeStart;
+	private JLabel lblTimeEnd;
+	private JLabel lblRoom;
+	private JButton btnViewResult;
+	private JButton btnBack;
+	private JLabel lblSubjectName;
+	private JLabel lblSubjectId;
+	private JLabel lblPoint;
+	private JLabel lblClassification;
 
 	/**
 	 * Create the panel.
@@ -18,66 +39,143 @@ public class CoursePanel extends JPanel {
 		setBackground(new Color(248, 248, 255));
 		setLayout(null);
 		
-		JLabel lblTitle = new JLabel("Khoá học: ");
+		lblTitle = new JLabel("Khoá học: ");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(25, 25, 112));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblTitle.setBounds(352, 10, 195, 49);
+		lblTitle.setBounds(158, 10, 610, 49);
 		add(lblTitle);
 		
-		JLabel lblDateStart = new JLabel("Ngày bắt đầu");
+		lblDateStart = new JLabel("Ngày bắt đầu: ");
 		lblDateStart.setForeground(new Color(112, 128, 144));
 		lblDateStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDateStart.setBounds(89, 96, 116, 22);
+		lblDateStart.setBounds(89, 153, 301, 22);
 		add(lblDateStart);
 		
-		JLabel lblDateEnd = new JLabel("Ngày kết thúc");
+		lblDateEnd = new JLabel("Ngày kết thúc");
 		lblDateEnd.setForeground(new Color(112, 128, 144));
 		lblDateEnd.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDateEnd.setBounds(637, 96, 116, 22);
+		lblDateEnd.setBounds(582, 153, 301, 22);
 		add(lblDateEnd);
 		
-		JLabel lblDateLearn = new JLabel("Ngày học");
+		lblDateLearn = new JLabel("Ngày học: ");
 		lblDateLearn.setForeground(new Color(112, 128, 144));
 		lblDateLearn.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDateLearn.setBounds(89, 268, 116, 22);
+		lblDateLearn.setBounds(89, 260, 301, 22);
 		add(lblDateLearn);
 		
-		JLabel lblTimeStart = new JLabel("Từ");
+		lblTimeStart = new JLabel("Từ: ");
 		lblTimeStart.setForeground(new Color(112, 128, 144));
 		lblTimeStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTimeStart.setBounds(89, 185, 174, 22);
+		lblTimeStart.setBounds(89, 209, 301, 22);
 		add(lblTimeStart);
 		
-		JLabel lblTimeEnd = new JLabel("Đến");
+		lblTimeEnd = new JLabel("Đến: ");
 		lblTimeEnd.setForeground(new Color(112, 128, 144));
 		lblTimeEnd.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTimeEnd.setBounds(637, 185, 174, 22);
+		lblTimeEnd.setBounds(582, 209, 301, 22);
 		add(lblTimeEnd);
 		
-		JLabel lblRoom = new JLabel("Phòng học");
+		lblRoom = new JLabel("Phòng học: ");
 		lblRoom.setForeground(new Color(112, 128, 144));
 		lblRoom.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblRoom.setBounds(637, 268, 116, 22);
+		lblRoom.setBounds(582, 260, 301, 22);
 		add(lblRoom);
 		
-		JButton btnViewResult = new JButton("Xem k\u1EBFt qu\u1EA3 \u0111i\u1EC3m danh");
+		btnViewResult = new JButton("Xem kết quả điểm danh");
 		btnViewResult.setForeground(new Color(255, 255, 255));
 		btnViewResult.setBackground(new Color(25, 25, 112));
 		btnViewResult.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnViewResult.setBounds(89, 386, 255, 36);
 		add(btnViewResult);
 		
-		JButton btnBack = new JButton("Quay l\u1EA1i");
+		btnBack = new JButton("Quay lại");
 		btnBack.setBackground(new Color(25, 25, 112));
 		btnBack.setForeground(new Color(255, 255, 255));
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				backToCourses();
 			}
 		});
 		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnBack.setBounds(628, 386, 255, 36);
+		btnBack.setBounds(582, 386, 255, 36);
 		add(btnBack);
-
+		
+		lblSubjectName = new JLabel("Tên môn học: ");
+		lblSubjectName.setForeground(new Color(112, 128, 144));
+		lblSubjectName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSubjectName.setBounds(582, 103, 301, 22);
+		add(lblSubjectName);
+		
+		lblSubjectId = new JLabel("Mã môn học: ");
+		lblSubjectId.setForeground(new Color(112, 128, 144));
+		lblSubjectId.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSubjectId.setBounds(89, 103, 301, 22);
+		add(lblSubjectId);
+		
+		lblPoint = new JLabel("Điểm khóa học: ");
+		lblPoint.setForeground(new Color(112, 128, 144));
+		lblPoint.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblPoint.setBounds(89, 318, 301, 22);
+		add(lblPoint);
+		
+		lblClassification = new JLabel("Xếp loại: ");
+		lblClassification.setForeground(new Color(112, 128, 144));
+		lblClassification.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblClassification.setBounds(582, 318, 301, 22);
+		add(lblClassification);
+	}
+	
+	public void displayStudentCourse(StudentCourse studentCourse) {
+		Course course = studentCourse.getCourse();
+		lblTitle.setText("Khóa học: " + course.getCourseName());
+		lblSubjectId.setText("Mã môn học: " + course.getSubject().getSubjectId());
+		lblSubjectName.setText("Tên môn học: " + course.getSubject().getSubjectName());
+		lblDateStart.setText("Ngày bắt đầu: " + DateTimeUtil.getDateString(course.getDateStart()));
+		lblDateEnd.setText("Ngày kết thúc: " + DateTimeUtil.getDateString(course.getDateEnd()));
+		lblDateLearn.setText("Ngày học: " + course.getDayInWeek());
+		lblTimeStart.setText("Từ: " + course.getPeriodIdStart().getTimeStart());
+		lblTimeEnd.setText("Đến: " + course.getPeriodIdEnd().getTimeEnd());
+		lblRoom.setText("Phòng học: " + course.getRoom().getRoomName());
+		
+		String pointString = "";
+		String classification = "";
+		if (studentCourse.getPoint() == null) {
+			pointString = "Chưa có";
+			classification = "Chưa có";
+		}
+		else {
+			pointString = studentCourse.getPoint() + "";
+			if (studentCourse.getPoint() < 5) {
+				classification = "Rớt";
+			}
+			else {
+				classification = "Đậu";
+			}
+		}
+		
+		lblPoint.setText("Điểm: " + pointString);
+		lblClassification.setText("Loại: " + classification);
+		
+	}
+	
+	private void backToCourses() {
+		StudentScreen screen = (StudentScreen) SwingUtilities.windowForComponent(this);
+		screen.showCourses();
+	}
+	
+	private void goToAttendanceResult(List<Attendance> atendanceList) {
+		StudentScreen screen = (StudentScreen) SwingUtilities.windowForComponent(this);
+		screen.showAttendanceResult(atendanceList);
+	}
+	
+	public void setViewResultBtnAction(final List<Attendance> atendanceList) {
+		btnViewResult.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				goToAttendanceResult(atendanceList);
+				
+			}
+		});
 	}
 }

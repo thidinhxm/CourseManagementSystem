@@ -38,26 +38,6 @@ public class StudentDAO {
 		return student;
 	}
 	
-	public static Student getStudentInformation(String studentId) {
-		Student student = null;
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		try {
-			student = (Student) session.get(Student.class, studentId);
-			if (student != null) {
-				Hibernate.initialize(student.getStudentCourse());
-			}
-		}
-		catch (NoResultException ex) {
-		}
-		catch (HibernateException ex) {
-			ex.printStackTrace();
-		}
-		finally {
-			session.close();
-		}
-		return student;
-	}
-	
 	public static List<Student> getStudents() {
 		List<Student> students = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();

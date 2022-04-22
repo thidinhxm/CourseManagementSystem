@@ -5,17 +5,21 @@ import javax.swing.JLabel;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.List;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import com.thidinhxm.daos.AttendanceDAO;
+import com.thidinhxm.entities.Attendance;
+import com.thidinhxm.utils.DateTimeUtil;
+
 import javax.swing.SwingConstants;
 
 public class AttendancePanel extends JPanel {
 	private JTable tableAttendance;
-
-	/**
-	 * Create the panel.
-	 */
+	private DefaultTableModel tableAttendanceModel;
 	public AttendancePanel() {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
@@ -32,6 +36,7 @@ public class AttendancePanel extends JPanel {
 		add(scrollPane);
 		
 		tableAttendance = new JTable();
+		tableAttendance.setEnabled(false);
 		tableAttendance.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tableAttendance.setForeground(new Color(25, 25, 112));
 		tableAttendance.getTableHeader().setFont( new Font( "Tahoma" , Font.PLAIN, 20 ));
@@ -39,28 +44,42 @@ public class AttendancePanel extends JPanel {
 		tableAttendance.getTableHeader().setForeground(Color.WHITE);
 		tableAttendance.setModel(new DefaultTableModel(
 			new Object[][] {
-				{"Tuần 1", null, null, null},
-				{"Tuần 2", null, null, null},
-				{"Tuần 3", null, null, null},
-				{"Tuần 4", null, null, null},
-				{"Tuần 5", null, null, null},
-				{"Tuần 6", null, null, null},
-				{"Tuần 7", null, null, null},
-				{"Tuần 8", null, null, null},
-				{"Tuần 9", null, null, null},
-				{"Tuần 10", null, null, null},
-				{"Tuần 11", null, null, null},
-				{"Tuần 12", null, null, null},
-				{"Tuần 13", null, null, null},
-				{"Tuần 14", null, null, null},
-				{"Tuần 15", null, null, null},
 			},
 			new String[] {
-				"Lo\u1EA1i", "C\u00F3 m\u1EB7t", "V\u1EAFng m\u1EB7t", "Ch\u01B0a c\u00F3 d\u1EEF li\u00EAu"
+				"Ngày", "Có mặt", "Vắng mặt", "Chưa có dữ liệu"
 			}
 		));
 		tableAttendance.setRowHeight(25);
 		scrollPane.setViewportView(tableAttendance);
 
+	}
+	
+	public void displayAttendanceList(List<Attendance> attendanceList) {
+		for (Attendance attendance : attendanceList) {
+			if (attendance.getPresent() == null) {
+				tableAttendanceModel.addRow(new Object[] {
+						DateTimeUtil.getDateString(attendance.getAttendanceId().getDateLearn()),
+						null,
+						null,
+						"X"
+					});
+			}
+			else if (attendance.getPresent() == true) {
+				tableAttendanceModel.addRow(new Object[] {
+						DateTimeUtil.getDateString(attendance.getAttendanceId().getDateLearn()),
+						"X",
+						null,
+						null
+					});
+			}
+			else {
+				tableAttendanceModel.addRow(new Object[] {
+						DateTimeUtil.getDateString(attendance.getAttendanceId().getDateLearn()),
+						null,
+						"X",
+						null
+					});
+			}
+		}
 	}
 }

@@ -17,18 +17,19 @@ import javax.persistence.Table;
 public class Period {
 	@Id
 	@GeneratedValue
+	@Column(name="periodId")
 	private Integer periodId;
 	
-	@Column(name="timeStart", nullable=false)
+	@Column(name="periodStart", nullable=false)
 	private Time timeStart;
 	
-	@Column(name="timeEnd", nullable=false)
+	@Column(name="periodEnd", nullable=false)
 	private Time timeEnd;
 	
-	@OneToMany(mappedBy="periodStart", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="periodIdStart", cascade=CascadeType.ALL)
 	private Set<Course> coursesStart = new HashSet<Course>();
 	
-	@OneToMany(mappedBy="periodEnd", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="periodIdEnd", cascade=CascadeType.ALL)
 	private Set<Course> coursesEnd = new HashSet<Course>();
 
 	public Integer getPeriodId() {
