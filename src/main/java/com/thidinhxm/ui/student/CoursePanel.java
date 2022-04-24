@@ -6,6 +6,8 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
@@ -36,7 +38,7 @@ public class CoursePanel extends JPanel {
 	 * Create the panel.
 	 */
 	public CoursePanel() {
-		setBackground(new Color(248, 248, 255));
+		setBackground(new Color(255, 255, 255));
 		setLayout(null);
 		
 		lblTitle = new JLabel("Khoá học: ");
@@ -55,7 +57,7 @@ public class CoursePanel extends JPanel {
 		lblDateEnd = new JLabel("Ngày kết thúc");
 		lblDateEnd.setForeground(new Color(112, 128, 144));
 		lblDateEnd.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDateEnd.setBounds(582, 153, 301, 22);
+		lblDateEnd.setBounds(440, 153, 464, 22);
 		add(lblDateEnd);
 		
 		lblDateLearn = new JLabel("Ngày học: ");
@@ -73,13 +75,13 @@ public class CoursePanel extends JPanel {
 		lblTimeEnd = new JLabel("Đến: ");
 		lblTimeEnd.setForeground(new Color(112, 128, 144));
 		lblTimeEnd.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblTimeEnd.setBounds(582, 209, 301, 22);
+		lblTimeEnd.setBounds(440, 209, 464, 22);
 		add(lblTimeEnd);
 		
 		lblRoom = new JLabel("Phòng học: ");
 		lblRoom.setForeground(new Color(112, 128, 144));
 		lblRoom.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblRoom.setBounds(582, 260, 301, 22);
+		lblRoom.setBounds(440, 260, 464, 22);
 		add(lblRoom);
 		
 		btnViewResult = new JButton("Xem kết quả điểm danh");
@@ -98,13 +100,13 @@ public class CoursePanel extends JPanel {
 			}
 		});
 		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		btnBack.setBounds(582, 386, 255, 36);
+		btnBack.setBounds(440, 386, 255, 36);
 		add(btnBack);
 		
 		lblSubjectName = new JLabel("Tên môn học: ");
 		lblSubjectName.setForeground(new Color(112, 128, 144));
 		lblSubjectName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblSubjectName.setBounds(582, 103, 301, 22);
+		lblSubjectName.setBounds(440, 103, 464, 22);
 		add(lblSubjectName);
 		
 		lblSubjectId = new JLabel("Mã môn học: ");
@@ -122,7 +124,7 @@ public class CoursePanel extends JPanel {
 		lblClassification = new JLabel("Xếp loại: ");
 		lblClassification.setForeground(new Color(112, 128, 144));
 		lblClassification.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblClassification.setBounds(582, 318, 301, 22);
+		lblClassification.setBounds(440, 318, 464, 22);
 		add(lblClassification);
 	}
 	
@@ -131,8 +133,8 @@ public class CoursePanel extends JPanel {
 		lblTitle.setText("Khóa học: " + course.getCourseName());
 		lblSubjectId.setText("Mã môn học: " + course.getSubject().getSubjectId());
 		lblSubjectName.setText("Tên môn học: " + course.getSubject().getSubjectName());
-		lblDateStart.setText("Ngày bắt đầu: " + DateTimeUtil.getDateString(course.getDateStart()));
-		lblDateEnd.setText("Ngày kết thúc: " + DateTimeUtil.getDateString(course.getDateEnd()));
+		lblDateStart.setText("Ngày bắt đầu: " + DateTimeUtil.getLocalDateString(course.getDateStart()));
+		lblDateEnd.setText("Ngày kết thúc: " + DateTimeUtil.getLocalDateString(course.getDateEnd()));
 		lblDateLearn.setText("Ngày học: " + course.getDayInWeek());
 		lblTimeStart.setText("Từ: " + course.getPeriodIdStart().getTimeStart());
 		lblTimeEnd.setText("Đến: " + course.getPeriodIdEnd().getTimeEnd());
@@ -170,12 +172,12 @@ public class CoursePanel extends JPanel {
 	}
 	
 	public void setViewResultBtnAction(final List<Attendance> atendanceList) {
-		btnViewResult.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
+		
+		btnViewResult.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				goToAttendanceResult(atendanceList);
-				
 			}
-		});
+		}) ;
 	}
 }

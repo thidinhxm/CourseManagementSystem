@@ -1,16 +1,14 @@
 package com.thidinhxm.entities;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 
 @Entity(name="staff")
-public class Staff implements Serializable {
+public class Staff {
 	
 	@Id
 	private String staffId;

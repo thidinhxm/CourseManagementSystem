@@ -1,6 +1,5 @@
 package com.thidinhxm.entities;
 
-import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="subject")
-public class Subject implements Serializable {
+public class Subject {
 	@GeneratedValue
 	@Id
 	private String subjectId;

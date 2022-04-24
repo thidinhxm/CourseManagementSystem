@@ -1,6 +1,6 @@
 package com.thidinhxm.entities;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,10 +21,10 @@ public class Period {
 	private Integer periodId;
 	
 	@Column(name="periodStart", nullable=false)
-	private Time timeStart;
+	private LocalTime timeStart;
 	
 	@Column(name="periodEnd", nullable=false)
-	private Time timeEnd;
+	private LocalTime timeEnd;
 	
 	@OneToMany(mappedBy="periodIdStart", cascade=CascadeType.ALL)
 	private Set<Course> coursesStart = new HashSet<Course>();
@@ -40,19 +40,19 @@ public class Period {
 		this.periodId = periodId;
 	}
 
-	public Time getTimeStart() {
+	public LocalTime getTimeStart() {
 		return timeStart;
 	}
 
-	public void setTimeStart(Time timeStart) {
+	public void setTimeStart(LocalTime timeStart) {
 		this.timeStart = timeStart;
 	}
 
-	public Time getTimeEnd() {
+	public LocalTime getTimeEnd() {
 		return timeEnd;
 	}
 
-	public void setTimeEnd(Time timeEnd) {
+	public void setTimeEnd(LocalTime timeEnd) {
 		this.timeEnd = timeEnd;
 	}
 

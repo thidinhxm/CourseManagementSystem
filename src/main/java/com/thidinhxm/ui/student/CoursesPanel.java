@@ -1,4 +1,4 @@
-package com.thidinhxm.ui.partials;
+package com.thidinhxm.ui.student;
 
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -22,7 +22,6 @@ import com.thidinhxm.daos.CourseDAO;
 import com.thidinhxm.daos.StudentCourseDAO;
 import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.StudentCourse;
-import com.thidinhxm.ui.student.StudentScreen;
 import com.thidinhxm.utils.DateTimeUtil;
 
 import javax.swing.JTextField;
@@ -42,9 +41,7 @@ public class CoursesPanel extends JPanel {
 	private JButton btnSearch;
 	private DefaultTableModel tableCourseModel;
 
-	/**
-	 * Create the panel.
-	 */
+	
 	public CoursesPanel(List<StudentCourse> studentCourseList) {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
@@ -69,17 +66,17 @@ public class CoursesPanel extends JPanel {
 			new Object[][] {
 			},
 			new String[] {
-				"Mã khóa học", "Tên khóa học", "Bắt đầu", "Kết thúc", "Ngày học", "Từ", "Đến"
+				"Mã khóa", "Tên khóa", "Bắt đầu", "Kết thúc", "Ngày học", "Từ", "Đến"
 			}
 		));
 		tableCourse.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tableCourse.getColumnModel().getColumn(0).setPreferredWidth(100);
-		tableCourse.getColumnModel().getColumn(1).setPreferredWidth(200);
-		tableCourse.getColumnModel().getColumn(2).setPreferredWidth(70);
-		tableCourse.getColumnModel().getColumn(3).setPreferredWidth(70);
-		tableCourse.getColumnModel().getColumn(4).setPreferredWidth(70);
-		tableCourse.getColumnModel().getColumn(5).setPreferredWidth(50);
-		tableCourse.getColumnModel().getColumn(6).setPreferredWidth(50);
+		tableCourse.getColumnModel().getColumn(0).setPreferredWidth(30);
+		tableCourse.getColumnModel().getColumn(1).setPreferredWidth(300);
+		tableCourse.getColumnModel().getColumn(2).setPreferredWidth(50);
+		tableCourse.getColumnModel().getColumn(3).setPreferredWidth(50);
+		tableCourse.getColumnModel().getColumn(4).setPreferredWidth(50);
+		tableCourse.getColumnModel().getColumn(5).setPreferredWidth(30);
+		tableCourse.getColumnModel().getColumn(6).setPreferredWidth(30);
 		tableCourse.setFocusable(false);
 		tableCourse.setRowSelectionAllowed(true);
 		tableCourse.setRowHeight(25);
@@ -140,19 +137,19 @@ public class CoursesPanel extends JPanel {
 		tableCourseModel.addRow(new Object[] {
 			course.getCourseId() + "",
 			course.getCourseName(),
-			DateTimeUtil.getDateString(course.getDateStart()),
-			DateTimeUtil.getDateString(course.getDateEnd()),
+			DateTimeUtil.getLocalDateString(course.getDateStart()),
+			DateTimeUtil.getLocalDateString(course.getDateEnd()),
 			course.getDayInWeek(),
 			course.getPeriodIdStart().getTimeStart() + "",
 			course.getPeriodIdEnd().getTimeEnd() + ""
 		});
 	}
 	
-	public void goToCourseDetails(int rowIndex) {
+	private void goToCourseDetails(int rowIndex) {
 		StudentScreen screen = (StudentScreen) SwingUtilities.windowForComponent(this);
 		Integer courseId = Integer.parseInt(tableCourseModel.getValueAt(rowIndex, 0) + "");
-		String studentId = screen.getStudentId();
-		screen.showCourseDetail(StudentCourseDAO.getStudentCourseByStudentCourseId(studentId, courseId));
+		String studentId = screen.getStudent().getStudentId();
+		screen.showCourse(StudentCourseDAO.getStudentCourseByStudentCourseId(studentId, courseId));
 	}
 	
 	public void unselectRow() {

@@ -1,6 +1,5 @@
 package com.thidinhxm.entities;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="student_course")
-public class StudentCourse implements Serializable{
+public class StudentCourse {
 	
 	@EmbeddedId
 	private StudentCourseId studentCourseId;

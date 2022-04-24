@@ -1,7 +1,6 @@
 package com.thidinhxm.entities;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,13 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class Course implements Serializable {
+public class Course {
 	@Id
 	@GeneratedValue
 	private Integer courseId;
 	private String courseName;
-	private Date dateStart;
-	private Date dateEnd;
+	private LocalDate dateStart;
+	private LocalDate dateEnd;
 	private String dayInWeek;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -46,7 +45,7 @@ public class Course implements Serializable {
 	public Course() {
 	}
 	
-	public Course(String courseName, Date dateStart, Date dateEnd, String dayInWeek, Period periodIdStart, Period periodIdEnd, Room room,
+	public Course(String courseName, LocalDate dateStart, LocalDate dateEnd, String dayInWeek, Period periodIdStart, Period periodIdEnd, Room room,
 			Subject subject) {
 		super();
 		this.courseName = courseName;
@@ -75,19 +74,19 @@ public class Course implements Serializable {
 		this.courseName = courseName;
 	}
 
-	public Date getDateStart() {
+	public LocalDate getDateStart() {
 		return dateStart;
 	}
 
-	public void setDateStart(Date dateStart) {
+	public void setDateStart(LocalDate dateStart) {
 		this.dateStart = dateStart;
 	}
 
-	public Date getDateEnd() {
+	public LocalDate getDateEnd() {
 		return dateEnd;
 	}
 
-	public void setDateEnd(Date dateEnd) {
+	public void setDateEnd(LocalDate dateEnd) {
 		this.dateEnd = dateEnd;
 	}
 	

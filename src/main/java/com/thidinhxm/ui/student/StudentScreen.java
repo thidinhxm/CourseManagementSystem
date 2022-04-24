@@ -1,27 +1,20 @@
 package com.thidinhxm.ui.student;
 
-
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Frame;
 
 import javax.swing.SwingConstants;
 
 import com.thidinhxm.daos.AttendanceDAO;
-import com.thidinhxm.daos.CourseDAO;
 import com.thidinhxm.daos.StudentCourseDAO;
-import com.thidinhxm.daos.StudentDAO;
 import com.thidinhxm.entities.Attendance;
-import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.Student;
 import com.thidinhxm.entities.StudentCourse;
 import com.thidinhxm.ui.partials.AccountPanel;
-import com.thidinhxm.ui.partials.CoursesPanel;
 import com.thidinhxm.ui.partials.HeaderPanel;
 
 import java.awt.CardLayout;
@@ -41,19 +34,18 @@ public class StudentScreen extends JFrame {
 	private JLabel lblAttendance;
 	private JPanel txtLogOutPane;
 	private CardLayout cardLayout;
-	private CoursesPanel coursesPane;
-	private AttendancePanel attendancePane;
 	private AccountPanel accountPane;
 	private JPanel mainPane;
-	private CoursePanel coursePane;
-	private String studentId;
+	private Student student;
+	private AttendancePanel attendancePane;
+	private CoursesContainerPanel coursesContainerPane;
 	private static final Color FIRST_COLOR = new Color(248, 248, 255);
 	private static final Color SECOND_COLOR = new Color(25, 25, 112);
 	private static final Color THIRD_COLOR = new Color(0, 0, 205);
 
 	public StudentScreen(Student student) {
 		
-		studentId = student.getStudentId();
+		this.student = student;
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1200, 650);
@@ -92,7 +84,8 @@ public class StudentScreen extends JFrame {
 				resetPanes();
 				txtCoursePane.setBackground(THIRD_COLOR);
 				lblCourse.setForeground(Color.WHITE);
-				cardLayout.show(mainPane, "courses");
+				showCourses();
+				cardLayout.show(mainPane, "courses-container");
 			}
 		});
 		
@@ -172,17 +165,15 @@ public class StudentScreen extends JFrame {
 		cardLayout = new CardLayout();
 		mainPane.setLayout(cardLayout);
 		
-		coursesPane = new CoursesPanel(StudentCourseDAO.getStudentCourseListByStudentId(student.getStudentId()));
 		attendancePane = new AttendancePanel();
 		accountPane = new AccountPanel();
-		coursePane = new CoursePanel();
+		coursesContainerPane = new CoursesContainerPanel(student.getStudentId());
 		
-		mainPane.add(coursesPane, "courses");
+		mainPane.add(coursesContainerPane, "courses-container");
 		mainPane.add(attendancePane, "attendance");
 		mainPane.add(accountPane, "account");
-		mainPane.add(coursePane, "course");
 		
-		cardLayout.show(mainPane, "courses");
+		cardLayout.show(mainPane, "courses-container");
 		
 		this.setVisible(true);
 	}
@@ -197,23 +188,23 @@ public class StudentScreen extends JFrame {
 		lblAccount.setForeground(SECOND_COLOR);
 	}
 	
-	public void showCourseDetail(StudentCourse studentCourse) {
-		coursePane.displayStudentCourse(studentCourse);
-		coursePane.setViewResultBtnAction(AttendanceDAO.getAttendanceListOfStudentCourse(studentCourse.getStudentCourseId()));
-		cardLayout.show(mainPane, "course");
+	public void showCoursesContainer() {
+		cardLayout.show(mainPane, "courses-container");
+	}
+	
+	public Student getStudent() {
+		return student;
 	}
 	
 	public void showCourses() {
-		coursesPane.unselectRow();
-		cardLayout.show(mainPane, "courses");
+		coursesContainerPane.showCourses();
+	}
+	
+	public void showCourse(StudentCourse studentCourse) {
+		coursesContainerPane.showCourse(studentCourse);
 	}
 	
 	public void showAttendanceResult(List<Attendance> attendanceList) {
-		attendancePane.displayAttendanceList(attendanceList);
-		cardLayout.show(mainPane, "attendance");
-	}
-	
-	public String getStudentId() {
-		return studentId;
+		coursesContainerPane.showAttendanceResult(attendanceList);
 	}
 }
