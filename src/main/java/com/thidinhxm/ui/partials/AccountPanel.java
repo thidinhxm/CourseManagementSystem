@@ -4,6 +4,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+
+import com.thidinhxm.entities.Staff;
+import com.thidinhxm.entities.Student;
+import com.thidinhxm.utils.DateTimeUtil;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.JLabel;
@@ -28,14 +33,14 @@ public class AccountPanel extends JPanel {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
 		
-		JLabel lblTitle = new JLabel("T\u00E0i kho\u1EA3n c\u00E1 nh\u00E2n");
+		JLabel lblTitle = new JLabel("Tài khoản của bạn");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(25, 25, 112));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblTitle.setBounds(338, 10, 236, 39);
 		add(lblTitle);
 		
-		JButton btnChangePassword = new JButton("\u0110\u1ED5i m\u1EADt kh\u1EA9u");
+		JButton btnChangePassword = new JButton("Thay đổi mật khẩu");
 		btnChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -47,7 +52,7 @@ public class AccountPanel extends JPanel {
 		add(btnChangePassword);
 		
 		txtIdTitle = new JTextField();
-		txtIdTitle.setText("M\u00E3 s\u1ED1");
+		txtIdTitle.setText("Mã số");
 		txtIdTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtIdTitle.setForeground(new Color(25, 25, 112));
 		txtIdTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -69,7 +74,7 @@ public class AccountPanel extends JPanel {
 		add(txtId);
 		
 		txtFullnameTitle = new JTextField();
-		txtFullnameTitle.setText("H\u1ECD v\u00E0 t\u00EAn");
+		txtFullnameTitle.setText("Họ và tên");
 		txtFullnameTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtFullnameTitle.setForeground(new Color(25, 25, 112));
 		txtFullnameTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -91,7 +96,7 @@ public class AccountPanel extends JPanel {
 		add(txtFullname);
 		
 		txtDateOfBirthTitle = new JTextField();
-		txtDateOfBirthTitle.setText("Ng\u00E0y sinh");
+		txtDateOfBirthTitle.setText("Ngày sinh");
 		txtDateOfBirthTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDateOfBirthTitle.setForeground(new Color(25, 25, 112));
 		txtDateOfBirthTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -113,7 +118,7 @@ public class AccountPanel extends JPanel {
 		add(txtDateOfBirth);
 		
 		txtGenderTitle = new JTextField();
-		txtGenderTitle.setText("Gi\u1EDBi t\u00EDnh");
+		txtGenderTitle.setText("Giới tính");
 		txtGenderTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		txtGenderTitle.setForeground(new Color(25, 25, 112));
 		txtGenderTitle.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -134,5 +139,21 @@ public class AccountPanel extends JPanel {
 		txtGender.setBounds(401, 308, 288, 39);
 		add(txtGender);
 
+	}
+	
+	public void setStudentAccount(Student student) {
+		txtIdTitle.setText("Mã sinh viên");
+		txtId.setText(student.getStudentId());
+		txtFullname.setText(student.getFullname());
+		txtDateOfBirth.setText(DateTimeUtil.getLocalDateString(student.getDateOfBirth()));
+		txtGender.setText(student.getGender());
+	}
+	
+	public void setStaffAccount(Staff staff) {
+		txtIdTitle.setText("Mã nhân viên");
+		txtId.setText(staff.getStaffId());
+		txtFullname.setText(staff.getFullname());
+		txtDateOfBirth.setText(DateTimeUtil.getLocalDateString(staff.getDateOfBirth()));
+		txtGender.setText(staff.getGender());
 	}
 }

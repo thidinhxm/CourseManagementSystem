@@ -1,37 +1,28 @@
 package com.thidinhxm.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-
-@Entity(name="staff")
+@Entity
+@Table(name="staff")
 public class Staff {
 	
 	@Id
 	private String staffId;
-	
-	@Column(name="username", length=255, nullable=false)
+
 	private String username;
-	
-	@Column(name="password", length=255, nullable=false)
 	private String password;
-	
-	@Column(name="fullname", length=255, nullable=false)
 	private String fullname;
-	
-	@Column(name="dateOfBirth", nullable=false)
-	private Date dateOfBirth;
-	
-	@Column(name="gender", length=255, nullable=false)
+	private LocalDate dateOfBirth;
 	private String gender;
 	
 	public Staff() {
 	}
 	
-	public Staff(String staffId, String username, String password, String fullname, Date dateOfBirth, String gender) {
+	public Staff(String staffId, String username, String password, String fullname, LocalDate dateOfBirth, String gender) {
 		this.staffId = staffId;
 		this.username = username;
 		this.password = password;
@@ -63,10 +54,10 @@ public class Staff {
 	public void setFullname(String fullname) {
 		this.fullname = fullname;
 	}
-	public Date getDateOfBirth() {
+	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(LocalDate dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	public String getGender() {

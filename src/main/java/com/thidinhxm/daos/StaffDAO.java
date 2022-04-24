@@ -14,8 +14,11 @@ public class StaffDAO {
 		Staff staff = null;
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
-			String hql = "from Staff s where s.username = " + username + " and s.password = " + password;
+			String hql = "from Staff s where s.username = :username "
+					+ "and s.password = :password";
 			Query<Staff> query = session.createQuery(hql, Staff.class);
+			query.setParameter("username", username);
+			query.setParameter("password", password);
 			staff = query.getSingleResult();
 		}
 		catch (NoResultException ex) {

@@ -167,6 +167,7 @@ public class StudentScreen extends JFrame {
 		
 		attendancePane = new AttendancePanel();
 		accountPane = new AccountPanel();
+		accountPane.setStudentAccount(student);
 		coursesContainerPane = new CoursesContainerPanel(student.getStudentId());
 		
 		mainPane.add(coursesContainerPane, "courses-container");

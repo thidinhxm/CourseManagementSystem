@@ -82,7 +82,7 @@ public class LoginScreen extends JFrame {
 		lblLogin.setBounds(786, 146, 159, 37);
 		contentPane.add(lblLogin);
 		
-		inputUsername = new JTextField("19120001");
+		inputUsername = new JTextField("nvtuan");
 		inputUsername.setForeground(new Color(25, 25, 112));
 		inputUsername.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		inputUsername.setColumns(10);
@@ -90,7 +90,7 @@ public class LoginScreen extends JFrame {
 		inputUsername.setBorder(new LineBorder(new Color(25, 25, 112)));
 		contentPane.add(inputUsername);
 		
-		inputPassword = new JPasswordField("19120001");
+		inputPassword = new JPasswordField("nvtuan");
 		inputPassword.setForeground(new Color(25, 25, 112));
 		inputPassword.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		inputPassword.setBounds(807, 320, 264, 37);
