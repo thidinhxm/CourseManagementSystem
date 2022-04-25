@@ -25,6 +25,7 @@ public class AccountPanel extends JPanel {
 	private JTextField txtDateOfBirth;
 	private JTextField txtGenderTitle;
 	private JTextField txtGender;
+	private JButton btnChangePassword;
 
 	/**
 	 * Create the panel.
@@ -40,9 +41,10 @@ public class AccountPanel extends JPanel {
 		lblTitle.setBounds(338, 10, 236, 39);
 		add(lblTitle);
 		
-		JButton btnChangePassword = new JButton("Thay đổi mật khẩu");
+		btnChangePassword = new JButton("Thay đổi mật khẩu");
 		btnChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		btnChangePassword.setForeground(Color.WHITE);
@@ -156,4 +158,5 @@ public class AccountPanel extends JPanel {
 		txtDateOfBirth.setText(DateTimeUtil.getLocalDateString(staff.getDateOfBirth()));
 		txtGender.setText(staff.getGender());
 	}
+	
 }

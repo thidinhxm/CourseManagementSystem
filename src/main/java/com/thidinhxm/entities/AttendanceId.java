@@ -7,40 +7,42 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class AttendanceId implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private StudentCourseId studentCourseId;
-	LocalDate dateLearn;
+	private Integer weekLearn;
 	
 	public AttendanceId() {
 	}
-	
-	public AttendanceId(StudentCourseId studentCourseId, LocalDate dateLearn) {
+
+	public AttendanceId(StudentCourseId studentCourseId, Integer weekLearn) {
+		super();
 		this.studentCourseId = studentCourseId;
-		this.dateLearn = dateLearn;
+		this.weekLearn = weekLearn;
 	}
 
 	public StudentCourseId getStudentCourseId() {
 		return studentCourseId;
 	}
+
 	public void setStudentCourseId(StudentCourseId studentCourseId) {
 		this.studentCourseId = studentCourseId;
 	}
-	public LocalDate getDateLearn() {
-		return dateLearn;
+
+	public Integer getWeekLearn() {
+		return weekLearn;
 	}
-	public void setDateLearn(LocalDate dateLearn) {
-		this.dateLearn = dateLearn;
+
+	public void setWeekLearn(Integer weekLearn) {
+		this.weekLearn = weekLearn;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((dateLearn == null) ? 0 : dateLearn.hashCode());
 		result = prime * result + ((studentCourseId == null) ? 0 : studentCourseId.hashCode());
+		result = prime * result + ((weekLearn == null) ? 0 : weekLearn.hashCode());
 		return result;
 	}
 
@@ -53,18 +55,19 @@ public class AttendanceId implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		AttendanceId other = (AttendanceId) obj;
-		if (dateLearn == null) {
-			if (other.dateLearn != null)
-				return false;
-		} else if (!dateLearn.equals(other.dateLearn))
-			return false;
 		if (studentCourseId == null) {
 			if (other.studentCourseId != null)
 				return false;
 		} else if (!studentCourseId.equals(other.studentCourseId))
 			return false;
+		if (weekLearn == null) {
+			if (other.weekLearn != null)
+				return false;
+		} else if (!weekLearn.equals(other.weekLearn))
+			return false;
 		return true;
 	}
+	
 	
 	
 }

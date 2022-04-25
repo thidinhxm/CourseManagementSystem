@@ -12,7 +12,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.thidinhxm.daos.CourseDAO;
+import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.Staff;
+import com.thidinhxm.ui.partials.AccountPanel;
 import com.thidinhxm.ui.partials.HeaderPanel;
 
 import java.awt.Color;
@@ -23,13 +25,16 @@ public class StaffScreen extends JFrame {
 	private JPanel txtAccountPane;
 	private JLabel lblAccount;
 	private JLabel lblSubject;
-	private JPanel txtStudentPane;
-	private JLabel lblStudent;
 	private JPanel txtCoursePane;
 	private JLabel lblCourse;
 	private JPanel txtLogOutPane;
 	private JLabel lblLogOut;
 	private JPanel txtSubjectPane;
+	private CardLayout cardLayout;
+	private CoursesContainerPanel coursesContainerPane;
+	private SubjectsPanel subjectsPane;
+	private AccountPanel accountPane;
+	private JPanel mainPane;
 	
 	private static final Color FIRST_COLOR = new Color(248, 248, 255);
 	private static final Color SECOND_COLOR = new Color(25, 25, 112);
@@ -57,7 +62,7 @@ public class StaffScreen extends JFrame {
 		txtAccountPane = new JPanel();
 		txtAccountPane.setLayout(null);
 		txtAccountPane.setBackground(new Color(248, 248, 255));
-		txtAccountPane.setBounds(0, 153, 182, 41);
+		txtAccountPane.setBounds(0, 102, 182, 41);
 		sidebarPane.add(txtAccountPane);
 		
 		lblAccount = new JLabel("Tài khoản");
@@ -72,6 +77,7 @@ public class StaffScreen extends JFrame {
 				resetPane();
 				txtAccountPane.setBackground(THIRD_COLOR);
 				lblAccount.setForeground(Color.WHITE);
+				showAccount();
 			}
 		});
 		txtAccountPane.add(lblAccount);
@@ -94,31 +100,10 @@ public class StaffScreen extends JFrame {
 				resetPane();
 				txtSubjectPane.setBackground(THIRD_COLOR);
 				lblSubject.setForeground(Color.WHITE);
+				showSubjects();
 			}
 		});
 		txtSubjectPane.add(lblSubject);
-		
-		txtStudentPane = new JPanel();
-		txtStudentPane.setLayout(null);
-		txtStudentPane.setBackground(new Color(248, 248, 255));
-		txtStudentPane.setBounds(0, 102, 182, 41);
-		sidebarPane.add(txtStudentPane);
-		
-		lblStudent = new JLabel("Sinh Viên");
-		lblStudent.setVerticalAlignment(SwingConstants.CENTER);
-		lblStudent.setHorizontalAlignment(SwingConstants.CENTER);
-		lblStudent.setForeground(new Color(25, 25, 112));
-		lblStudent.setFont(new Font("Dialog", Font.BOLD, 16));
-		lblStudent.setBounds(0, 0, 182, 41);
-		lblStudent.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				resetPane();
-				txtStudentPane.setBackground(THIRD_COLOR);
-				lblStudent.setForeground(Color.WHITE);
-			}
-		});
-		txtStudentPane.add(lblStudent);
 		
 		txtCoursePane = new JPanel();
 		txtCoursePane.setLayout(null);
@@ -138,6 +123,8 @@ public class StaffScreen extends JFrame {
 				resetPane();
 				txtCoursePane.setBackground(THIRD_COLOR);
 				lblCourse.setForeground(Color.WHITE);
+				showCourses();
+				showCoursesContainer();
 			}
 		});
 		txtCoursePane.add(lblCourse);
@@ -163,29 +150,56 @@ public class StaffScreen extends JFrame {
 		lblInformation.setBounds(405, 579, 382, 24);
 		contentPane.add(lblInformation);
 		
-		JPanel mainPane = new JPanel();
+		mainPane = new JPanel();
 		mainPane.setBackground(new Color(255, 255, 255));
 		mainPane.setBounds(204, 70, 960, 490);
 		contentPane.add(mainPane);
-		mainPane.setLayout(new CardLayout(0, 0));
 		
-
-		CoursesPanel pn = new CoursesPanel(CourseDAO.getCourses());
-
-		mainPane.add(pn);
+		cardLayout = new CardLayout();
 		
+		mainPane.setLayout(cardLayout);
+		
+		coursesContainerPane = new CoursesContainerPanel();
+		subjectsPane = new SubjectsPanel();
+		accountPane = new AccountPanel();
+		accountPane.setStaffAccount(staff);
+		
+		mainPane.add(coursesContainerPane, "courses-container");
+		mainPane.add(subjectsPane, "subjects");
+		mainPane.add(accountPane, "account");
 		setVisible(true);
 	}
 	
 	private void resetPane() {
 		txtCoursePane.setBackground(FIRST_COLOR);
 		txtSubjectPane.setBackground(FIRST_COLOR);
-		txtStudentPane.setBackground(FIRST_COLOR);
 		txtAccountPane.setBackground(FIRST_COLOR);
 		
 		lblCourse.setForeground(SECOND_COLOR);
 		lblSubject.setForeground(SECOND_COLOR);
-		lblStudent.setForeground(SECOND_COLOR);
 		lblAccount.setForeground(SECOND_COLOR);
 	}
+	
+	public void showCoursesContainer() {
+		cardLayout.show(mainPane, "courses-container");
+	}
+	
+	public void showCourses() {
+		coursesContainerPane.showCourses();
+	}
+	public void showCourse(Course course) {
+		coursesContainerPane.showCourse(course);
+	}
+	public void showAddStudent() {
+		coursesContainerPane.showAddStudent();
+	}
+	
+	public void showSubjects() {
+		cardLayout.show(mainPane, "subjects");
+	}
+	
+	public void showAccount() {
+		cardLayout.show(mainPane, "account");
+	}
+	
 }

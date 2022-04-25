@@ -28,8 +28,6 @@ public class ResultAttendancePanel extends JPanel {
 	private DefaultTableModel tableAttendanceModel;
 	private JButton btnBack;
 	
-	private String studentId;
-	private String courseId;
 	public ResultAttendancePanel() {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
@@ -77,8 +75,8 @@ public class ResultAttendancePanel extends JPanel {
 		for (Attendance attendance : attendanceList) {
 			if (attendance.getPresent() == null) {
 				tableAttendanceModel.addRow(new Object[] {
-						tableAttendance.getRowCount() + 1 + "",
-						DateTimeUtil.getLocalDateString(attendance.getAttendanceId().getDateLearn()),
+						attendance.getAttendanceId().getWeekLearn() + "",
+						DateTimeUtil.getLocalDateString(attendance.getDateLearn()),
 						null,
 						null,
 						"X"
@@ -86,8 +84,8 @@ public class ResultAttendancePanel extends JPanel {
 			}
 			else if (attendance.getPresent() == true) {
 				tableAttendanceModel.addRow(new Object[] {
-						tableAttendance.getRowCount() + 1 + "",
-						DateTimeUtil.getLocalDateString(attendance.getAttendanceId().getDateLearn()),
+						attendance.getAttendanceId().getWeekLearn() + "",
+						DateTimeUtil.getLocalDateString(attendance.getDateLearn()),
 						"X",
 						null,
 						null
@@ -95,8 +93,8 @@ public class ResultAttendancePanel extends JPanel {
 			}
 			else {
 				tableAttendanceModel.addRow(new Object[] {
-						tableAttendance.getRowCount() + 1 + "",
-						DateTimeUtil.getLocalDateString(attendance.getAttendanceId().getDateLearn()),
+						attendance.getAttendanceId().getWeekLearn() + "",
+						DateTimeUtil.getLocalDateString(attendance.getDateLearn()),
 						null,
 						"X",
 						null

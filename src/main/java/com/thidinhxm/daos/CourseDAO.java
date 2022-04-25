@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -32,5 +31,23 @@ public class CourseDAO {
 			session.close();
 		}
 		return courses;
+	}
+	
+	public static Course getCourse(int courseId) {
+		Course course = null;
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			course = session.get(Course.class, courseId);
+		}
+		catch (NoResultException ex) {
+		}
+		catch (HibernateException ex) {
+			ex.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return course;
 	}
 }

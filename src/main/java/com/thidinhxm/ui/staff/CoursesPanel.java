@@ -14,12 +14,16 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import com.thidinhxm.daos.CourseDAO;
+import com.thidinhxm.daos.StudentCourseDAO;
 import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.StudentCourse;
+import com.thidinhxm.ui.student.StudentScreen;
 import com.thidinhxm.utils.DateTimeUtil;
 
 public class CoursesPanel extends JPanel {
@@ -28,6 +32,7 @@ public class CoursesPanel extends JPanel {
 	private JTextField inputCourse;
 	private JButton btnSearch;
 	private DefaultTableModel tableCourseModel;
+	private JButton btnAddCourse;
 	
 	public CoursesPanel(List<Course> courses) {
 		setBackground(new Color(255, 255, 255));
@@ -71,16 +76,15 @@ public class CoursesPanel extends JPanel {
 		scrollPane.setViewportView(tableCourse);
 		tableCourseModel = (DefaultTableModel) tableCourse.getModel();
 		displayCourses(courses);
-//		tableCourse.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				int row = tableCourse.getSelectedRow();
-//				if (row >= 0) {
-//					goToCourseDetails(row);
-//				}
-//			}
-//		});
-//		displayCourses(studentCourseList);
+		tableCourse.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = tableCourse.getSelectedRow();
+				if (row >= 0) {
+					goToCourseDetails(row);
+				}
+			}
+		});
 		
 		txtCourse = new JTextField();
 		txtCourse.setHorizontalAlignment(SwingConstants.CENTER);
@@ -98,7 +102,7 @@ public class CoursesPanel extends JPanel {
 		inputCourse.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		inputCourse.setForeground(new Color(25, 25, 112));
 		inputCourse.setColumns(10);
-		inputCourse.setBounds(180, 48, 620, 39);
+		inputCourse.setBounds(180, 48, 486, 39);
 		inputCourse.setBorder(new LineBorder(new Color(25, 25, 112)));
 		add(inputCourse);
 		
@@ -106,8 +110,15 @@ public class CoursesPanel extends JPanel {
 		btnSearch.setForeground(new Color(255, 255, 255));
 		btnSearch.setBackground(new Color(25, 25, 112));
 		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnSearch.setBounds(820, 48, 115, 39);
+		btnSearch.setBounds(684, 48, 115, 39);
 		add(btnSearch);
+		
+		btnAddCourse = new JButton("Thêm khóa");
+		btnAddCourse.setForeground(Color.WHITE);
+		btnAddCourse.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAddCourse.setBackground(new Color(25, 25, 112));
+		btnAddCourse.setBounds(820, 48, 115, 39);
+		add(btnAddCourse);
 	}
 	
 	private void displayCourses(List<Course> courses) {
@@ -134,5 +145,14 @@ public class CoursesPanel extends JPanel {
 			course.getRoom().getRoomName()
 		});
 	}
-
+	
+	public void unselectRow() {
+		tableCourse.getSelectionModel().clearSelection();
+	}
+	
+	private void goToCourseDetails(int rowIndex) {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		Integer courseId = Integer.parseInt(tableCourseModel.getValueAt(rowIndex, 0) + "");
+		screen.showCourse(CourseDAO.getCourse(courseId));
+	}
 }

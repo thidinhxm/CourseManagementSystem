@@ -18,9 +18,6 @@ public class ChooseStudentPanel extends JPanel {
 	private JTextField txtStudent;
 	private JTextField inputStudent;
 
-	/**
-	 * Create the panel.
-	 */
 	public ChooseStudentPanel() {
 		setBackground(new Color(248, 248, 255));
 		setLayout(null);
@@ -33,7 +30,7 @@ public class ChooseStudentPanel extends JPanel {
 		add(lblTitle);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(17, 117, 733, 289);
+		scrollPane.setBounds(17, 117, 723, 289);
 		add(scrollPane);
 		
 		tableStudent = new JTable();
@@ -44,15 +41,6 @@ public class ChooseStudentPanel extends JPanel {
 		tableStudent.getTableHeader().setForeground(Color.WHITE);
 		tableStudent.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
 			},
 			new String[] {
 				"STT", "MSSV", "Họ và tên", "Chọn"
@@ -89,15 +77,16 @@ public class ChooseStudentPanel extends JPanel {
 		inputStudent.setForeground(new Color(25, 25, 112));
 		inputStudent.setColumns(10);
 		inputStudent.setBorder(new LineBorder(new Color(25, 25, 112)));
-		inputStudent.setBounds(166, 57, 444, 39);
+		inputStudent.setBounds(162, 57, 444, 39);
 		add(inputStudent);
 		
 		JButton btnSearch = new JButton("Tìm kiếm");
 		btnSearch.setForeground(Color.WHITE);
 		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnSearch.setBackground(new Color(25, 25, 112));
-		btnSearch.setBounds(635, 57, 115, 39);
+		btnSearch.setBounds(625, 57, 115, 39);
 		add(btnSearch);
 
 	}
+	
 }

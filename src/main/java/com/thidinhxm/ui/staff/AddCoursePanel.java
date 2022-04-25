@@ -15,12 +15,12 @@ public class AddCoursePanel extends JPanel {
 	private JTextField txtSubject;
 	private JTextField inputSubject;
 	private JTextField txtDateStart;
-	private JTextField textField_3;
+	private JTextField inputDateStart;
 	private JTextField txtDateLearn;
-	private JTextField textField_5;
+	private JTextField inputDateLearn;
 	private JTextField txtDateEnd;
-	private JTextField textField_2;
-	private JTextField textField;
+	private JTextField inputDateEnd;
+	private JTextField inputRoom;
 	private JTextField txtRoom;
 	private JTextField txtTimeStart;
 	private JTextField textField_6;
@@ -75,13 +75,13 @@ public class AddCoursePanel extends JPanel {
 		txtDateStart.setBounds(96, 207, 125, 39);
 		add(txtDateStart);
 		
-		textField_3 = new JTextField();
-		textField_3.setForeground(new Color(25, 25, 112));
-		textField_3.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_3.setColumns(10);
-		textField_3.setBorder(new LineBorder(new Color(25, 25, 112)));
-		textField_3.setBounds(241, 207, 217, 39);
-		add(textField_3);
+		inputDateStart = new JTextField();
+		inputDateStart.setForeground(new Color(25, 25, 112));
+		inputDateStart.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		inputDateStart.setColumns(10);
+		inputDateStart.setBorder(new LineBorder(new Color(25, 25, 112)));
+		inputDateStart.setBounds(241, 207, 217, 39);
+		add(inputDateStart);
 		
 		txtDateLearn = new JTextField();
 		txtDateLearn.setText("Ng\u00E0y h\u1ECDc");
@@ -95,13 +95,13 @@ public class AddCoursePanel extends JPanel {
 		txtDateLearn.setBounds(96, 270, 125, 39);
 		add(txtDateLearn);
 		
-		textField_5 = new JTextField();
-		textField_5.setForeground(new Color(25, 25, 112));
-		textField_5.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_5.setColumns(10);
-		textField_5.setBorder(new LineBorder(new Color(25, 25, 112)));
-		textField_5.setBounds(241, 270, 217, 39);
-		add(textField_5);
+		inputDateLearn = new JTextField();
+		inputDateLearn.setForeground(new Color(25, 25, 112));
+		inputDateLearn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		inputDateLearn.setColumns(10);
+		inputDateLearn.setBorder(new LineBorder(new Color(25, 25, 112)));
+		inputDateLearn.setBounds(241, 270, 217, 39);
+		add(inputDateLearn);
 		
 		JButton btnAdd = new JButton("Th\u00EAm kh\u00F3a h\u1ECDc");
 		btnAdd.addActionListener(new ActionListener() {
@@ -133,21 +133,21 @@ public class AddCoursePanel extends JPanel {
 		txtDateEnd.setBounds(506, 207, 125, 39);
 		add(txtDateEnd);
 		
-		textField_2 = new JTextField();
-		textField_2.setForeground(new Color(25, 25, 112));
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_2.setColumns(10);
-		textField_2.setBorder(new LineBorder(new Color(25, 25, 112)));
-		textField_2.setBounds(651, 207, 217, 39);
-		add(textField_2);
+		inputDateEnd = new JTextField();
+		inputDateEnd.setForeground(new Color(25, 25, 112));
+		inputDateEnd.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		inputDateEnd.setColumns(10);
+		inputDateEnd.setBorder(new LineBorder(new Color(25, 25, 112)));
+		inputDateEnd.setBounds(651, 207, 217, 39);
+		add(inputDateEnd);
 		
-		textField = new JTextField();
-		textField.setForeground(new Color(25, 25, 112));
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField.setColumns(10);
-		textField.setBorder(new LineBorder(new Color(25, 25, 112)));
-		textField.setBounds(651, 270, 217, 39);
-		add(textField);
+		inputRoom = new JTextField();
+		inputRoom.setForeground(new Color(25, 25, 112));
+		inputRoom.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		inputRoom.setColumns(10);
+		inputRoom.setBorder(new LineBorder(new Color(25, 25, 112)));
+		inputRoom.setBounds(651, 270, 217, 39);
+		add(inputRoom);
 		
 		txtRoom = new JTextField();
 		txtRoom.setText("Ph\u00F2ng h\u1ECDc");

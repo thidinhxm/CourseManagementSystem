@@ -1,84 +1,169 @@
 package com.thidinhxm.ui.staff;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JScrollPane;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+
+import com.thidinhxm.entities.Course;
+import com.thidinhxm.entities.StudentCourse;
+import com.thidinhxm.utils.DateTimeUtil;
 
 public class CoursePanel extends JPanel {
-	private JTable table;
 
-	/**
-	 * Create the panel.
-	 */
+	private JLabel lblTitle;
+	private JLabel lblDateStart;
+	private JLabel lblDateEnd;
+	private JLabel lblDateLearn;
+	private JLabel lblTimeStart;
+	private JLabel lblTimeEnd;
+	private JLabel lblRoom;
+	private JButton btnAddStudent;
+	private JButton btnBack;
+	private JLabel lblSubjectName;
+	private JLabel lblSubjectId;
+	private JButton btnResultAttendance;
+
+
 	public CoursePanel() {
+		setBackground(new Color(255, 255, 255));
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Khoá học: ");
-		lblNewLabel.setForeground(new Color(25, 25, 112));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setBounds(67, 10, 195, 49);
-		add(lblNewLabel);
+		lblTitle = new JLabel("Thông tin khóa học: ");
+		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitle.setForeground(new Color(25, 25, 112));
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblTitle.setBounds(158, 10, 610, 49);
+		add(lblTitle);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(67, 123, 838, 321);
-		add(scrollPane);
+		lblDateStart = new JLabel("Ngày bắt đầu: ");
+		lblDateStart.setForeground(new Color(112, 128, 144));
+		lblDateStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDateStart.setBounds(89, 153, 301, 22);
+		add(lblDateStart);
 		
-		table = new JTable();
-		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		table.setForeground(new Color(25, 25, 112));
-		table.getTableHeader().setFont( new Font( "Tahoma" , Font.PLAIN, 20 ));
-		table.getTableHeader().setBackground(new Color(25, 25, 112));
-		table.getTableHeader().setForeground(Color.WHITE);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-			},
-			new String[] {
-				"STT", "MSSV", "Họ và tên", "Điểm"
+		lblDateEnd = new JLabel("Ngày kết thúc");
+		lblDateEnd.setForeground(new Color(112, 128, 144));
+		lblDateEnd.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDateEnd.setBounds(440, 153, 464, 22);
+		add(lblDateEnd);
+		
+		lblDateLearn = new JLabel("Ngày học: ");
+		lblDateLearn.setForeground(new Color(112, 128, 144));
+		lblDateLearn.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDateLearn.setBounds(89, 260, 301, 22);
+		add(lblDateLearn);
+		
+		lblTimeStart = new JLabel("Từ: ");
+		lblTimeStart.setForeground(new Color(112, 128, 144));
+		lblTimeStart.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblTimeStart.setBounds(89, 209, 301, 22);
+		add(lblTimeStart);
+		
+		lblTimeEnd = new JLabel("Đến: ");
+		lblTimeEnd.setForeground(new Color(112, 128, 144));
+		lblTimeEnd.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblTimeEnd.setBounds(440, 209, 464, 22);
+		add(lblTimeEnd);
+		
+		lblRoom = new JLabel("Phòng học: ");
+		lblRoom.setForeground(new Color(112, 128, 144));
+		lblRoom.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblRoom.setBounds(440, 260, 464, 22);
+		add(lblRoom);
+		
+		btnAddStudent = new JButton("Thêm sinh viên");
+		btnAddStudent.setForeground(new Color(255, 255, 255));
+		btnAddStudent.setBackground(new Color(25, 25, 112));
+		btnAddStudent.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnAddStudent.setBounds(351, 386, 214, 36);
+		
+		add(btnAddStudent);
+		
+		btnBack = new JButton("Quay lại");
+		btnBack.setBackground(new Color(25, 25, 112));
+		btnBack.setForeground(new Color(255, 255, 255));
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				backToCourses();
 			}
-		));
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.getColumnModel().getColumn(0).setPreferredWidth(5);
-		table.getColumnModel().getColumn(1).setPreferredWidth(70);
-		table.getColumnModel().getColumn(2).setPreferredWidth(200);
-		table.getColumnModel().getColumn(3).setPreferredWidth(70);
-		table.setRowHeight(25);
-		scrollPane.setViewportView(table);
+		});
+		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnBack.setBounds(614, 386, 214, 36);
+		add(btnBack);
 		
-		JLabel lblDanhSchSinh = new JLabel("Danh s\u00E1ch sinh vi\u00EAn");
-		lblDanhSchSinh.setForeground(new Color(25, 25, 112));
-		lblDanhSchSinh.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblDanhSchSinh.setBounds(67, 57, 201, 49);
-		add(lblDanhSchSinh);
+		lblSubjectName = new JLabel("Tên môn học: ");
+		lblSubjectName.setForeground(new Color(112, 128, 144));
+		lblSubjectName.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSubjectName.setBounds(440, 103, 464, 22);
+		add(lblSubjectName);
 		
-		JButton btnThmSinhVin = new JButton("Th\u00EAm sinh vi\u00EAn");
-		btnThmSinhVin.setForeground(Color.WHITE);
-		btnThmSinhVin.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnThmSinhVin.setBackground(new Color(25, 25, 112));
-		btnThmSinhVin.setBounds(751, 63, 154, 39);
-		add(btnThmSinhVin);
-
+		lblSubjectId = new JLabel("Mã môn học: ");
+		lblSubjectId.setForeground(new Color(112, 128, 144));
+		lblSubjectId.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblSubjectId.setBounds(89, 103, 301, 22);
+		add(lblSubjectId);
+		
+		btnResultAttendance = new JButton("Kết quả điểm danh");
+		btnResultAttendance.setForeground(Color.WHITE);
+		btnResultAttendance.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnResultAttendance.setBackground(new Color(25, 25, 112));
+		btnResultAttendance.setBounds(89, 386, 214, 36);
+		add(btnResultAttendance);
+	}
+	
+	public void displayCourse(Course course) {
+		lblTitle.setText("Khóa học: " + course.getCourseName());
+		lblSubjectId.setText("Mã môn học: " + course.getSubject().getSubjectId());
+		lblSubjectName.setText("Tên môn học: " + course.getSubject().getSubjectName());
+		lblDateStart.setText("Ngày bắt đầu: " + DateTimeUtil.getLocalDateString(course.getDateStart()));
+		lblDateEnd.setText("Ngày kết thúc: " + DateTimeUtil.getLocalDateString(course.getDateEnd()));
+		lblDateLearn.setText("Ngày học: " + course.getDayInWeek());
+		lblTimeStart.setText("Từ: " + course.getPeriodIdStart().getTimeStart());
+		lblTimeEnd.setText("Đến: " + course.getPeriodIdEnd().getTimeEnd());
+		lblRoom.setText("Phòng học: " + course.getRoom().getRoomName());
+		
+	}
+	
+	private void backToCourses() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showCourses();
+	}
+	
+	private void goToStudentsInCourse(List<StudentCourse> studentCourseList) {
+		
+	}
+	
+	public void setViewStudentsInCourse(final List<StudentCourse> studentCourseList) {
+		btnResultAttendance.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				goToStudentsInCourse(studentCourseList);
+			}
+		});
+	}
+	
+	public void goToAddStudent() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showAddStudent();
+	}
+	
+	public void setGoToAddStudentBtn() {
+		btnAddStudent.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				goToAddStudent();
+			}
+		});
 	}
 
 }

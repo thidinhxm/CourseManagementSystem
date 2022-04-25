@@ -1,6 +1,7 @@
 package com.thidinhxm.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +22,7 @@ public class Student {
 	private String fullname;
 	private LocalDate dateOfBirth;
 	private String gender;
+	private LocalDateTime firstLogin;
 	
 	@OneToMany(mappedBy="student", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Set<StudentCourse> studentCourse = new HashSet<StudentCourse>();
@@ -32,6 +34,13 @@ public class Student {
 		this.studentId = studentId;
 		this.username = username;
 		this.password = password;
+		this.fullname = fullname;
+		this.dateOfBirth = dateOfBirth;
+		this.gender = gender;
+	}
+	
+	public Student(String studentId, String fullname, LocalDate dateOfBirth, String gender) {
+		this.studentId = studentId;
 		this.fullname = fullname;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
@@ -77,6 +86,12 @@ public class Student {
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+	public LocalDateTime getFirstLogin() {
+		return firstLogin;
+	}
+	public void setFirstLogin(LocalDateTime firstLogin) {
+		this.firstLogin = firstLogin;
 	}
 	
 	public Set<StudentCourse> getStudentCourse() {

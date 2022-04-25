@@ -1,5 +1,7 @@
 package com.thidinhxm.entities;
 
+import java.time.LocalDate;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -14,6 +16,7 @@ public class Attendance {
 	@EmbeddedId
 	private AttendanceId attendanceId;
 	private Boolean present;
+	private LocalDate dateLearn;
 	
 	@ManyToOne
 	@MapsId("studentCourseId")
@@ -25,10 +28,11 @@ public class Attendance {
 	
 	public Attendance() {
 	}
-	public Attendance(AttendanceId attendanceId, Boolean present, StudentCourse studentCourse) {
+	public Attendance(AttendanceId attendanceId, Boolean present, LocalDate dateLearn, StudentCourse studentCourse) {
 		super();
 		this.attendanceId = attendanceId;
 		this.present = present;
+		this.dateLearn = dateLearn;
 		this.studentCourse = studentCourse;
 	}
 
@@ -46,6 +50,14 @@ public class Attendance {
 
 	public void setPresent(Boolean present) {
 		this.present = present;
+	}
+	
+	public LocalDate getDateLearn() {
+		return dateLearn;
+	}
+
+	public void setDateLearn(LocalDate dateLearn) {
+		this.dateLearn = dateLearn;
 	}
 
 	public StudentCourse getStudentCourse() {

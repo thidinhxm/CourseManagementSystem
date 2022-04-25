@@ -46,7 +46,7 @@ public class AddNewStudentPanel extends JPanel {
 		add(btnAdd);
 		
 		txtId = new JTextField();
-		txtId.setText("M\u00E3 s\u1ED1");
+		txtId.setText("MSSV");
 		txtId.setHorizontalAlignment(SwingConstants.CENTER);
 		txtId.setForeground(new Color(25, 25, 112));
 		txtId.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -68,7 +68,7 @@ public class AddNewStudentPanel extends JPanel {
 		add(inputId);
 		
 		txtFullname = new JTextField();
-		txtFullname.setText("H\u1ECD v\u00E0 t\u00EAn");
+		txtFullname.setText("Họ và tên");
 		txtFullname.setHorizontalAlignment(SwingConstants.CENTER);
 		txtFullname.setForeground(new Color(25, 25, 112));
 		txtFullname.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -90,7 +90,7 @@ public class AddNewStudentPanel extends JPanel {
 		add(inputFullname);
 		
 		txtDateOfBirth = new JTextField();
-		txtDateOfBirth.setText("Ng\u00E0y sinh");
+		txtDateOfBirth.setText("Ngày sinh");
 		txtDateOfBirth.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDateOfBirth.setForeground(new Color(25, 25, 112));
 		txtDateOfBirth.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -112,7 +112,7 @@ public class AddNewStudentPanel extends JPanel {
 		add(inputDateOfBirth);
 		
 		txtGender = new JTextField();
-		txtGender.setText("Gi\u1EDBi t\u00EDnh");
+		txtGender.setText("Giới tính");
 		txtGender.setHorizontalAlignment(SwingConstants.CENTER);
 		txtGender.setForeground(new Color(25, 25, 112));
 		txtGender.setFont(new Font("Tahoma", Font.PLAIN, 16));
