@@ -60,7 +60,6 @@ public class AddNewStudentPanel extends JPanel {
 		inputId = new JTextField();
 		inputId.setForeground(new Color(25, 25, 112));
 		inputId.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputId.setEditable(false);
 		inputId.setColumns(10);
 		inputId.setBorder(new LineBorder(new Color(25, 25, 112)));
 		inputId.setBackground(Color.WHITE);
@@ -82,7 +81,6 @@ public class AddNewStudentPanel extends JPanel {
 		inputFullname = new JTextField();
 		inputFullname.setForeground(new Color(25, 25, 112));
 		inputFullname.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputFullname.setEditable(false);
 		inputFullname.setColumns(10);
 		inputFullname.setBorder(new LineBorder(new Color(25, 25, 112)));
 		inputFullname.setBackground(Color.WHITE);
@@ -104,7 +102,6 @@ public class AddNewStudentPanel extends JPanel {
 		inputDateOfBirth = new JTextField();
 		inputDateOfBirth.setForeground(new Color(25, 25, 112));
 		inputDateOfBirth.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputDateOfBirth.setEditable(false);
 		inputDateOfBirth.setColumns(10);
 		inputDateOfBirth.setBorder(new LineBorder(new Color(25, 25, 112)));
 		inputDateOfBirth.setBackground(Color.WHITE);
@@ -126,7 +123,6 @@ public class AddNewStudentPanel extends JPanel {
 		inputGender = new JTextField();
 		inputGender.setForeground(new Color(25, 25, 112));
 		inputGender.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputGender.setEditable(false);
 		inputGender.setColumns(10);
 		inputGender.setBorder(new LineBorder(new Color(25, 25, 112)));
 		inputGender.setBackground(Color.WHITE);

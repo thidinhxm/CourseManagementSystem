@@ -5,6 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 import javax.swing.SwingConstants;
@@ -15,7 +17,9 @@ import com.thidinhxm.entities.Attendance;
 import com.thidinhxm.entities.Student;
 import com.thidinhxm.entities.StudentCourse;
 import com.thidinhxm.ui.partials.AccountPanel;
+import com.thidinhxm.ui.partials.ChangePasswordPanel;
 import com.thidinhxm.ui.partials.HeaderPanel;
+import com.thidinhxm.ui.partials.LoginScreen;
 
 import java.awt.CardLayout;
 
@@ -39,6 +43,7 @@ public class StudentScreen extends JFrame {
 	private Student student;
 	private AttendancePanel attendancePane;
 	private CoursesContainerPanel coursesContainerPane;
+	private ChangePasswordPanel changePasswordPane;
 	private static final Color FIRST_COLOR = new Color(248, 248, 255);
 	private static final Color SECOND_COLOR = new Color(25, 25, 112);
 	private static final Color THIRD_COLOR = new Color(0, 0, 205);
@@ -109,7 +114,8 @@ public class StudentScreen extends JFrame {
 				resetPanes();
 				txtAccountPane.setBackground(THIRD_COLOR);
 				lblAccount.setForeground(Color.WHITE);
-				cardLayout.show(mainPane, "account");			}
+				cardLayout.show(mainPane, "account");			
+			}
 		});
 		
 		txtAttendancePane = new JPanel();
@@ -150,6 +156,18 @@ public class StudentScreen extends JFrame {
 		lblLogOut.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogOut.setForeground(new Color(25, 25, 112));
 		lblLogOut.setFont(new Font("Dialog", Font.BOLD, 16));
+		lblLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int choice = JOptionPane.showConfirmDialog(mainPane, "Bạn có muốn đăng xuất không?");
+				
+				if (choice == JOptionPane.YES_OPTION) {
+					setVisible(false);
+					dispose();
+					new LoginScreen();
+				}
+			}
+		});
 		
 		JLabel lblInformation = new JLabel("Hệ thống được phát triển bởi tác giả Đinh Trần Xuân Thi");
 		lblInformation.setForeground(new Color(25, 25, 112));
@@ -169,12 +187,24 @@ public class StudentScreen extends JFrame {
 		accountPane = new AccountPanel();
 		accountPane.setStudentAccount(student);
 		coursesContainerPane = new CoursesContainerPanel(student.getStudentId());
+		changePasswordPane = new ChangePasswordPanel("student", student.getStudentId());
 		
 		mainPane.add(coursesContainerPane, "courses-container");
 		mainPane.add(attendancePane, "attendance");
 		mainPane.add(accountPane, "account");
+		mainPane.add(changePasswordPane, "password");
 		
-		cardLayout.show(mainPane, "courses-container");
+		if (student.getLastChangePassword() == null) {
+			resetPanes();
+			txtAccountPane.setBackground(THIRD_COLOR);
+			lblAccount.setForeground(Color.WHITE);
+			cardLayout.show(mainPane, "account");
+			showChangePassword();
+			
+		}
+		else {
+			cardLayout.show(mainPane, "courses-container");
+		}
 		
 		this.setVisible(true);
 	}
@@ -207,5 +237,9 @@ public class StudentScreen extends JFrame {
 	
 	public void showAttendanceResult(List<Attendance> attendanceList) {
 		coursesContainerPane.showAttendanceResult(attendanceList);
+	}
+	
+	public void showChangePassword() {
+		cardLayout.show(mainPane, "password");
 	}
 }

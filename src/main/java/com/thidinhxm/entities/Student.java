@@ -22,7 +22,7 @@ public class Student {
 	private String fullname;
 	private LocalDate dateOfBirth;
 	private String gender;
-	private LocalDateTime firstLogin;
+	private LocalDateTime lastChangePassword;
 	
 	@OneToMany(mappedBy="student", cascade=CascadeType.ALL, orphanRemoval=true)
 	private Set<StudentCourse> studentCourse = new HashSet<StudentCourse>();
@@ -87,11 +87,11 @@ public class Student {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public LocalDateTime getFirstLogin() {
-		return firstLogin;
+	public LocalDateTime getLastChangePassword() {
+		return lastChangePassword;
 	}
-	public void setFirstLogin(LocalDateTime firstLogin) {
-		this.firstLogin = firstLogin;
+	public void setLastChangePassword(LocalDateTime lastChangePassword) {
+		this.lastChangePassword = lastChangePassword;
 	}
 	
 	public Set<StudentCourse> getStudentCourse() {

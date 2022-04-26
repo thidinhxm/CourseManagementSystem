@@ -7,10 +7,13 @@ import javax.swing.border.LineBorder;
 
 import com.thidinhxm.entities.Staff;
 import com.thidinhxm.entities.Student;
+import com.thidinhxm.ui.staff.StaffScreen;
+import com.thidinhxm.ui.student.StudentScreen;
 import com.thidinhxm.utils.DateTimeUtil;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -26,10 +29,9 @@ public class AccountPanel extends JPanel {
 	private JTextField txtGenderTitle;
 	private JTextField txtGender;
 	private JButton btnChangePassword;
-
-	/**
-	 * Create the panel.
-	 */
+	
+	private String typeAccount;
+	
 	public AccountPanel() {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
@@ -44,7 +46,7 @@ public class AccountPanel extends JPanel {
 		btnChangePassword = new JButton("Thay đổi mật khẩu");
 		btnChangePassword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				goToChangePassword();
 			}
 		});
 		btnChangePassword.setForeground(Color.WHITE);
@@ -149,6 +151,7 @@ public class AccountPanel extends JPanel {
 		txtFullname.setText(student.getFullname());
 		txtDateOfBirth.setText(DateTimeUtil.getLocalDateString(student.getDateOfBirth()));
 		txtGender.setText(student.getGender());
+		typeAccount = "student";
 	}
 	
 	public void setStaffAccount(Staff staff) {
@@ -157,6 +160,20 @@ public class AccountPanel extends JPanel {
 		txtFullname.setText(staff.getFullname());
 		txtDateOfBirth.setText(DateTimeUtil.getLocalDateString(staff.getDateOfBirth()));
 		txtGender.setText(staff.getGender());
+		typeAccount = "staff";
 	}
+	
+	private void goToChangePassword() {
+		if (typeAccount == "student") {
+			StudentScreen screen = (StudentScreen) SwingUtilities.windowForComponent(this);
+			screen.showChangePassword();
+		}
+		else {
+			StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+			screen.showChangePassword();
+		}
+		
+	}
+
 	
 }

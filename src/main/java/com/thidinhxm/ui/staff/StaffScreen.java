@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -15,7 +16,10 @@ import com.thidinhxm.daos.CourseDAO;
 import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.Staff;
 import com.thidinhxm.ui.partials.AccountPanel;
+import com.thidinhxm.ui.partials.ChangePasswordPanel;
 import com.thidinhxm.ui.partials.HeaderPanel;
+import com.thidinhxm.ui.partials.LoginScreen;
+import com.thidinhxm.ui.student.StudentScreen;
 
 import java.awt.Color;
 
@@ -35,6 +39,8 @@ public class StaffScreen extends JFrame {
 	private SubjectsPanel subjectsPane;
 	private AccountPanel accountPane;
 	private JPanel mainPane;
+	private ChangePasswordPanel changePasswordPane;
+	private AddSubjectPanel addSubjectPane;
 	
 	private static final Color FIRST_COLOR = new Color(248, 248, 255);
 	private static final Color SECOND_COLOR = new Color(25, 25, 112);
@@ -142,6 +148,18 @@ public class StaffScreen extends JFrame {
 		lblLogOut.setFont(new Font("Dialog", Font.BOLD, 16));
 		lblLogOut.setBackground(new Color(248, 248, 255));
 		lblLogOut.setBounds(0, 0, 182, 41);
+		lblLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int choice = JOptionPane.showConfirmDialog(mainPane, "Bạn có muốn đăng xuất không?");
+				
+				if (choice == JOptionPane.YES_OPTION) {
+					setVisible(false);
+					dispose();
+					new LoginScreen();
+				}
+			}
+		});
 		txtLogOutPane.add(lblLogOut);
 		
 		JLabel lblInformation = new JLabel("Hệ thống được phát triển bởi tác giả Đinh Trần Xuân Thi");
@@ -163,10 +181,14 @@ public class StaffScreen extends JFrame {
 		subjectsPane = new SubjectsPanel();
 		accountPane = new AccountPanel();
 		accountPane.setStaffAccount(staff);
+		changePasswordPane = new ChangePasswordPanel("staff", staff.getStaffId());
+		addSubjectPane = new AddSubjectPanel();
 		
 		mainPane.add(coursesContainerPane, "courses-container");
 		mainPane.add(subjectsPane, "subjects");
 		mainPane.add(accountPane, "account");
+		mainPane.add(changePasswordPane, "password");
+		
 		setVisible(true);
 	}
 	
@@ -200,6 +222,10 @@ public class StaffScreen extends JFrame {
 	
 	public void showAccount() {
 		cardLayout.show(mainPane, "account");
+	}
+	
+	public void showChangePassword() {
+		cardLayout.show(mainPane, "password");
 	}
 	
 }
