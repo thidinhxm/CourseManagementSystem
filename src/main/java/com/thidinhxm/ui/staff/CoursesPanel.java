@@ -118,6 +118,7 @@ public class CoursesPanel extends JPanel {
 		btnAddCourse.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAddCourse.setBackground(new Color(25, 25, 112));
 		btnAddCourse.setBounds(820, 48, 115, 39);
+		
 		add(btnAddCourse);
 	}
 	
@@ -153,6 +154,6 @@ public class CoursesPanel extends JPanel {
 	private void goToCourseDetails(int rowIndex) {
 		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
 		Integer courseId = Integer.parseInt(tableCourseModel.getValueAt(rowIndex, 0) + "");
-		screen.showCourse(CourseDAO.getCourse(courseId));
+		screen.showCourse(CourseDAO.getCourseById(courseId));
 	}
 }

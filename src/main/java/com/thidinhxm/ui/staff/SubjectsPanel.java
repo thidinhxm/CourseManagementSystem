@@ -4,22 +4,33 @@ import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
+
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+
+import com.thidinhxm.daos.SubjectDAO;
+import com.thidinhxm.entities.Subject;
 
 public class SubjectsPanel extends JPanel {
 	private JTextField txtSubject;
 	private JTextField inputSubject;
 	private JTable tableSubject;
+	private DefaultTableModel tableSubjectModel;
+	private JButton btnAdd;
+	private JButton btnSearch;
 
-	/**
-	 * Create the panel.
-	 */
 	public SubjectsPanel() {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
@@ -49,7 +60,7 @@ public class SubjectsPanel extends JPanel {
 		inputSubject.setBounds(179, 53, 430, 39);
 		add(inputSubject);
 		
-		JButton btnSearch = new JButton("Tìm kiếm");
+		btnSearch = new JButton("Tìm kiếm");
 		btnSearch.setForeground(Color.WHITE);
 		btnSearch.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnSearch.setBackground(new Color(25, 25, 112));
@@ -68,19 +79,6 @@ public class SubjectsPanel extends JPanel {
 		tableSubject.getTableHeader().setForeground(Color.WHITE);
 		tableSubject.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
 			},
 			new String[] {
 				"STT", "Mã môn học", "Tên môn học", "Số tín chỉ"
@@ -92,14 +90,42 @@ public class SubjectsPanel extends JPanel {
 		tableSubject.getColumnModel().getColumn(2).setPreferredWidth(500);
 		tableSubject.getColumnModel().getColumn(3).setPreferredWidth(100);
 		tableSubject.setRowHeight(25);
+		tableSubjectModel = (DefaultTableModel) tableSubject.getModel();
+		displayTable(SubjectDAO.getSubjects());
 		scrollPane.setViewportView(tableSubject);
 		
-		JButton btnAdd = new JButton("Thêm môn học");
+		btnAdd = new JButton("Thêm môn học");
 		btnAdd.setForeground(Color.WHITE);
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAdd.setBackground(new Color(25, 25, 112));
 		btnAdd.setBounds(783, 53, 151, 39);
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				goToAddSubject();
+			}
+		});
 		add(btnAdd);
 
+	}
+	
+	public void goToAddSubject() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showAddSubject();
+	}
+	
+	private void addSubjectToTable(Subject subject) {
+		tableSubjectModel.addRow(new Object[] {
+			tableSubject.getRowCount() + 1 + "",
+			subject.getSubjectId(),
+			subject.getSubjectName(),
+			subject.getCredits() + ""
+		});
+	}
+	
+	public void displayTable(List<Subject> subjects) {
+		tableSubjectModel.setRowCount(0);
+		for (Subject subject : subjects) {
+			addSubjectToTable(subject);
+		}
 	}
 }

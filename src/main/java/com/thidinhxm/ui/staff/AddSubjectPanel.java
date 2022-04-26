@@ -4,10 +4,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.Color;
 import javax.swing.border.LineBorder;
+import javax.swing.text.NumberFormatter;
+
+import com.thidinhxm.daos.SubjectDAO;
+import com.thidinhxm.entities.Subject;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.NumberFormat;
+
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 
 public class AddSubjectPanel extends JPanel {
 	private JTextField txtSubjectId;
@@ -20,9 +32,6 @@ public class AddSubjectPanel extends JPanel {
 	private JButton btnAdd;
 	private JButton btnBack;
 
-	/**
-	 * Create the panel.
-	 */
 	public AddSubjectPanel() {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
@@ -67,6 +76,7 @@ public class AddSubjectPanel extends JPanel {
 		inputSubjectName.setBounds(350, 182, 430, 39);
 		add(inputSubjectName);
 		
+
 		txtSubjectCredit = new JTextField();
 		txtSubjectCredit.setText("Số tín chỉ");
 		txtSubjectCredit.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,6 +109,13 @@ public class AddSubjectPanel extends JPanel {
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAdd.setBackground(new Color(25, 25, 112));
 		btnAdd.setBounds(314, 356, 151, 39);
+		btnAdd.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				handleBtnAddClick();	
+			}
+			
+		});
 		add(btnAdd);
 		
 		btnBack = new JButton("Quay lại");
@@ -106,7 +123,47 @@ public class AddSubjectPanel extends JPanel {
 		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnBack.setBackground(new Color(25, 25, 112));
 		btnBack.setBounds(518, 356, 151, 39);
+		btnBack.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				backToSubjects();	
+			}
+			
+		});
 		add(btnBack);
 
+	}
+	
+	private void backToSubjects() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showSubjects();
+	}
+	
+	public void handleBtnAddClick() {
+		String subjectId = inputSubjectId.getText();
+		String subjectName = inputSubjectName.getText();
+		String subjectCredit = inputSubjectCredit.getText();
+		
+		if (subjectId.equals("") || subjectName.equals("") || subjectCredit.equals("")) {
+			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
+		}
+		else if (SubjectDAO.getSubjectById(subjectId) != null) {
+			JOptionPane.showMessageDialog(this, "Mã môn học đã tồn tại");
+		}
+		else if (!subjectCredit.matches("[0-4]") ) {
+			JOptionPane.showMessageDialog(this, "Số tín chỉ phải là số và có giá trị từ 1 đến 4");
+		}
+		else {
+			Subject subject = new Subject(subjectId, subjectName, Integer.parseInt(subjectCredit));
+			Boolean check = SubjectDAO.addSubject(subject);
+			if (check) {
+				JOptionPane.showMessageDialog(this, "Thêm môn học thành công");
+				StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+				screen.viewAfterAddSubject();
+			}
+			else {
+				JOptionPane.showMessageDialog(this, "Thêm môn học thất bại");
+			}
+		}
 	}
 }

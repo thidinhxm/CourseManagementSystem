@@ -15,6 +15,7 @@ public class CoursesContainerPanel extends JPanel {
 	private CoursesPanel coursesPane;
 	private CoursePanel coursePane;
 	private AddStudentPanel addStudentPane;
+	private AddCoursePanel addCoursePane;
 
 	public CoursesContainerPanel() {
 		setBackground(new Color(255, 255, 255));
@@ -24,11 +25,12 @@ public class CoursesContainerPanel extends JPanel {
 		coursesPane = new CoursesPanel(CourseDAO.getCourses());
 		coursePane = new CoursePanel();
 		addStudentPane = new AddStudentPanel();
+		addCoursePane = new AddCoursePanel();
 		
 		add(coursesPane, "courses");
 		add(coursePane, "course");
 		add(addStudentPane, "add-student");
-		
+		add(addCoursePane, "add-course");
 		
 		cardLayout.show(this, "courses");
 	}
@@ -46,5 +48,9 @@ public class CoursesContainerPanel extends JPanel {
 	
 	public void showAddStudent() {
 		cardLayout.show(this, "add-student");
+	}
+	
+	public void showAddCourse() {
+		cardLayout.show(this, "add-course");
 	}
 }

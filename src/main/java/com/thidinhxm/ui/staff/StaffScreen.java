@@ -13,6 +13,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.thidinhxm.daos.CourseDAO;
+import com.thidinhxm.daos.SubjectDAO;
 import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.Staff;
 import com.thidinhxm.ui.partials.AccountPanel;
@@ -188,6 +189,9 @@ public class StaffScreen extends JFrame {
 		mainPane.add(subjectsPane, "subjects");
 		mainPane.add(accountPane, "account");
 		mainPane.add(changePasswordPane, "password");
+		mainPane.add(addSubjectPane, "add-subject");
+		
+		cardLayout.show(mainPane, "courses-container");
 		
 		setVisible(true);
 	}
@@ -216,6 +220,10 @@ public class StaffScreen extends JFrame {
 		coursesContainerPane.showAddStudent();
 	}
 	
+	public void showAddCourse() {
+		coursesContainerPane.showAddCourse();
+	}
+	
 	public void showSubjects() {
 		cardLayout.show(mainPane, "subjects");
 	}
@@ -227,5 +235,14 @@ public class StaffScreen extends JFrame {
 	public void showChangePassword() {
 		cardLayout.show(mainPane, "password");
 	}
+	
+	public void showAddSubject() {
+		cardLayout.show(mainPane, "add-subject");
+	}
+	
+	public void viewAfterAddSubject() {
+		subjectsPane.displayTable(SubjectDAO.getSubjects());
+	}
+	
 	
 }

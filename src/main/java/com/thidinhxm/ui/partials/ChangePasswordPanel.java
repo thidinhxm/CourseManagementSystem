@@ -125,11 +125,11 @@ public class ChangePasswordPanel extends JPanel {
 			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin!");
 		}
 		
-		if (!newPassword.equals(confirmNewPassword)) {
+		else if (!newPassword.equals(confirmNewPassword)) {
 			JOptionPane.showMessageDialog(this, "Nhập mật khẩu không khớp!");
 		}
 		
-		if (typeAccount == "student") {
+		else if (typeAccount == "student") {
 			if (StudentDAO.checkPassword(id, password)) {
 				StudentDAO.changePassword(id, newPassword);
 				JOptionPane.showMessageDialog(this, "Đổi mật khẩu thành công!");
