@@ -2,6 +2,8 @@ package com.thidinhxm.ui.staff;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -118,7 +120,12 @@ public class CoursesPanel extends JPanel {
 		btnAddCourse.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAddCourse.setBackground(new Color(25, 25, 112));
 		btnAddCourse.setBounds(820, 48, 115, 39);
-		
+		btnAddCourse.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				goToAddCourse();
+			}
+		});
 		add(btnAddCourse);
 	}
 	
@@ -155,5 +162,10 @@ public class CoursesPanel extends JPanel {
 		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
 		Integer courseId = Integer.parseInt(tableCourseModel.getValueAt(rowIndex, 0) + "");
 		screen.showCourse(CourseDAO.getCourseById(courseId));
+	}
+	
+	private void goToAddCourse() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showAddCourse();
 	}
 }

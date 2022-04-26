@@ -216,8 +216,8 @@ public class StaffScreen extends JFrame {
 	public void showCourse(Course course) {
 		coursesContainerPane.showCourse(course);
 	}
-	public void showAddStudent() {
-		coursesContainerPane.showAddStudent();
+	public void showAddStudent(Course course) {
+		coursesContainerPane.showAddStudent(course);
 	}
 	
 	public void showAddCourse() {

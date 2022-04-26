@@ -49,5 +49,8 @@ public class Subject {
 	public void setCredits(Integer credits) {
 		this.credits = credits;
 	}
+	public String toString() {
+		return getSubjectId() + " - " + getSubjectName();
+	}
 	
 }

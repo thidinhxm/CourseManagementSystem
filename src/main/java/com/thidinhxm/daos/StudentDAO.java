@@ -141,4 +141,25 @@ public class StudentDAO {
 		return true;
 	}
 	
+	public static List<Student> getStudentsNotInCourse(Integer courseId) {
+		List<Student> students = null;
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			String hql = "select s from Student s "
+					+ "where s.studentId not in (select sc.studentCourseId.studentId from StudentCourse sc where sc.studentCourseId.courseId = :courseId)";
+			Query<Student> query = session.createQuery(hql, Student.class);
+			query.setParameter("courseId", courseId);
+			students = query.list();
+		}
+		catch (NoResultException ex) {
+		}
+		catch(HibernateException ex) {
+			ex.printStackTrace();
+		}
+		finally {
+			session.close();
+		}
+		return students;
+	}
+	
 }

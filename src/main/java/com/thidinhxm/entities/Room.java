@@ -58,4 +58,8 @@ public class Room {
 		this.courses = courses;
 	}
 	
+	public String toString() {
+		return roomName;
+	}
+	
 }

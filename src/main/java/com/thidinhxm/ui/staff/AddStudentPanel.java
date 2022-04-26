@@ -10,6 +10,9 @@ import java.awt.Component;
 import java.awt.Container;
 
 import javax.swing.SwingConstants;
+
+import com.thidinhxm.entities.Course;
+
 import java.awt.CardLayout;
 
 public class AddStudentPanel extends JPanel {
@@ -26,6 +29,8 @@ public class AddStudentPanel extends JPanel {
 	private Container txtAddFromFilePane;
 	private JPanel titlePane;
 	private CardLayout cardLayout;
+	
+	private Course course;
 	
 	private static final Color FIRST_COLOR = new Color(248, 248, 255);
 	private static final Color SECOND_COLOR = new Color(25, 25, 112);
@@ -140,5 +145,18 @@ public class AddStudentPanel extends JPanel {
 		lblChooseStudent.setForeground(SECOND_COLOR);
 		lblAddNewStudent.setForeground(SECOND_COLOR);
 		lblAddFromFile.setForeground(SECOND_COLOR);
+	}
+	
+	public void setCourse(Course course) {
+		this.course = course;
+		chooseStudentPane.setCourse(course);
+		addNewStudentPane.setCourse(course);
+		importStudentPane.setCourse(course);
+	}
+	
+	public void setTitle() {
+		chooseStudentPane.setTitle();
+		addNewStudentPane.setTitle();
+		importStudentPane.setTitle();
 	}
 }

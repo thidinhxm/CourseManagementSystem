@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,19 +17,20 @@ import javax.persistence.OneToMany;
 @Entity
 public class Course {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer courseId;
+	
 	private String courseName;
 	private LocalDate dateStart;
 	private LocalDate dateEnd;
 	private String dayInWeek;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="periodIdStart", insertable=false, updatable=false)
+	@JoinColumn(name="periodIdStart", insertable=true, updatable=true)
 	private Period periodIdStart;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="periodIdEnd", insertable=false, updatable=false)
+	@JoinColumn(name="periodIdEnd", insertable=true, updatable=true)
 	private Period periodIdEnd;
 	
 	@ManyToOne(fetch=FetchType.EAGER)

@@ -46,7 +46,9 @@ public class CoursesContainerPanel extends JPanel {
 		cardLayout.show(this, "courses");
 	}
 	
-	public void showAddStudent() {
+	public void showAddStudent(Course course) {
+		addStudentPane.setCourse(course);
+		addStudentPane.setTitle();
 		cardLayout.show(this, "add-student");
 	}
 	

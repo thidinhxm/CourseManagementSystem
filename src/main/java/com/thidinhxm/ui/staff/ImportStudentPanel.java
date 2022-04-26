@@ -3,6 +3,7 @@ package com.thidinhxm.ui.staff;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -31,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.Student;
 import com.thidinhxm.utils.DateTimeUtil;
 
@@ -41,18 +43,22 @@ public class ImportStudentPanel extends JPanel {
 	private JTable tableStudent;
 	private DefaultTableModel tableStudentModel;
 	
+	private Course course;
+	private JLabel lblTitle;
+	private JButton btnDownload;
+	
 	public ImportStudentPanel() {
 		setBackground(new Color(248, 248, 255));
 		setLayout(null);
 		
-		JLabel lblTitle = new JLabel("Thêm sinh viên từ file");
+		lblTitle = new JLabel("Thêm sinh viên từ file");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(25, 25, 112));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblTitle.setBounds(224, 0, 325, 49);
+		lblTitle.setBounds(17, 0, 723, 49);
 		add(lblTitle);
 		
-		JButton btnDownload = new JButton("Tải template");
+		btnDownload = new JButton("Tải template");
 		btnDownload.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				downloadTemplate();
@@ -189,5 +195,13 @@ public class ImportStudentPanel extends JPanel {
 					student.getGender()
 			});
 		}
+	}
+	
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	
+	public void setTitle() {
+		lblTitle.setText("Thêm sinh viên từ file vào khóa " + course.getCourseName());;
 	}
 }

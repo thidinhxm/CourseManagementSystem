@@ -2,41 +2,81 @@ package com.thidinhxm.ui.staff;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
+
+import com.thidinhxm.daos.CourseDAO;
+import com.thidinhxm.daos.PeriodDAO;
+import com.thidinhxm.daos.RoomDAO;
+import com.thidinhxm.daos.SubjectDAO;
+import com.thidinhxm.entities.Course;
+import com.thidinhxm.entities.Period;
+import com.thidinhxm.entities.Room;
+import com.thidinhxm.entities.Subject;
+import com.thidinhxm.utils.DateLabelFormatter;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Properties;
 import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.SpringLayout;
 
 public class AddCoursePanel extends JPanel {
 	private JTextField txtSubject;
-	private JTextField inputSubject;
 	private JTextField txtDateStart;
-	private JTextField inputDateStart;
 	private JTextField txtDateLearn;
-	private JTextField inputDateLearn;
 	private JTextField txtDateEnd;
-	private JTextField inputDateEnd;
-	private JTextField inputRoom;
 	private JTextField txtRoom;
 	private JTextField txtTimeStart;
-	private JTextField textField_6;
 	private JTextField txtTimeEnd;
-	private JTextField textField_8;
 	private JTextField txtCourseName;
-	private JTextField textField_7;
+	private JTextField inputCourseName;
+	private JComboBox<Subject> comboBoxSubject;
+	private JComboBox<Period> comboBoxTimeStart;
+	private JComboBox<Period> comboBoxTimeEnd;
+	private JComboBox<Room> comboBoxRoom;
+	private JComboBox<String> comboBoxDateLearn;
+	private JButton btnAdd;
+	private JButton btnBack;
+	private JDatePanelImpl datePanel;
+	private Properties p;
+	private UtilDateModel model;
+	private SpringLayout springLayoutDateStart;
+	private JDatePickerImpl datePickerDateStart;
+	private JDatePickerImpl datePickerDateEnd;
+	private SpringLayout springLayoutDateEnd;
+	private UtilDateModel modelDateStart;
+	private JDatePanelImpl dateStartPanel;
+	private UtilDateModel modelDateEnd;
+	private JDatePanelImpl dateEndPanel;
 
-	/**
-	 * Create the panel.
-	 */
 	public AddCoursePanel() {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
 		
-		JLabel lblTitle = new JLabel("Th\u00EAm kh\u00F3a h\u1ECDc");
+		JLabel lblTitle = new JLabel("Thêm khóa học");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(25, 25, 112));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
@@ -44,7 +84,7 @@ public class AddCoursePanel extends JPanel {
 		add(lblTitle);
 		
 		txtSubject = new JTextField();
-		txtSubject.setText("M\u00F4n h\u1ECDc");
+		txtSubject.setText("Môn học");
 		txtSubject.setHorizontalAlignment(SwingConstants.CENTER);
 		txtSubject.setForeground(new Color(25, 25, 112));
 		txtSubject.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -55,16 +95,8 @@ public class AddCoursePanel extends JPanel {
 		txtSubject.setBounds(96, 78, 125, 39);
 		add(txtSubject);
 		
-		inputSubject = new JTextField();
-		inputSubject.setForeground(new Color(25, 25, 112));
-		inputSubject.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputSubject.setColumns(10);
-		inputSubject.setBorder(new LineBorder(new Color(25, 25, 112)));
-		inputSubject.setBounds(241, 78, 627, 39);
-		add(inputSubject);
-		
 		txtDateStart = new JTextField();
-		txtDateStart.setText("Ng\u00E0y b\u1EAFt \u0111\u1EA7u");
+		txtDateStart.setText("Ngày bắt đầu");
 		txtDateStart.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDateStart.setForeground(new Color(25, 25, 112));
 		txtDateStart.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -75,16 +107,8 @@ public class AddCoursePanel extends JPanel {
 		txtDateStart.setBounds(96, 207, 125, 39);
 		add(txtDateStart);
 		
-		inputDateStart = new JTextField();
-		inputDateStart.setForeground(new Color(25, 25, 112));
-		inputDateStart.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputDateStart.setColumns(10);
-		inputDateStart.setBorder(new LineBorder(new Color(25, 25, 112)));
-		inputDateStart.setBounds(241, 207, 217, 39);
-		add(inputDateStart);
-		
 		txtDateLearn = new JTextField();
-		txtDateLearn.setText("Ng\u00E0y h\u1ECDc");
+		txtDateLearn.setText("Ngày học");
 		txtDateLearn.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDateLearn.setForeground(new Color(25, 25, 112));
 		txtDateLearn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -95,34 +119,8 @@ public class AddCoursePanel extends JPanel {
 		txtDateLearn.setBounds(96, 270, 125, 39);
 		add(txtDateLearn);
 		
-		inputDateLearn = new JTextField();
-		inputDateLearn.setForeground(new Color(25, 25, 112));
-		inputDateLearn.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputDateLearn.setColumns(10);
-		inputDateLearn.setBorder(new LineBorder(new Color(25, 25, 112)));
-		inputDateLearn.setBounds(241, 270, 217, 39);
-		add(inputDateLearn);
-		
-		JButton btnAdd = new JButton("Th\u00EAm kh\u00F3a h\u1ECDc");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnAdd.setForeground(Color.WHITE);
-		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAdd.setBackground(new Color(25, 25, 112));
-		btnAdd.setBounds(307, 412, 151, 39);
-		add(btnAdd);
-		
-		JButton btnBack = new JButton("Quay lại");
-		btnBack.setForeground(Color.WHITE);
-		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnBack.setBackground(new Color(25, 25, 112));
-		btnBack.setBounds(506, 412, 151, 39);
-		add(btnBack);
-		
 		txtDateEnd = new JTextField();
-		txtDateEnd.setText("Ng\u00E0y k\u1EBFt th\u00FAc");
+		txtDateEnd.setText("Ngày kết thúc");
 		txtDateEnd.setHorizontalAlignment(SwingConstants.CENTER);
 		txtDateEnd.setForeground(new Color(25, 25, 112));
 		txtDateEnd.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -133,24 +131,8 @@ public class AddCoursePanel extends JPanel {
 		txtDateEnd.setBounds(506, 207, 125, 39);
 		add(txtDateEnd);
 		
-		inputDateEnd = new JTextField();
-		inputDateEnd.setForeground(new Color(25, 25, 112));
-		inputDateEnd.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputDateEnd.setColumns(10);
-		inputDateEnd.setBorder(new LineBorder(new Color(25, 25, 112)));
-		inputDateEnd.setBounds(651, 207, 217, 39);
-		add(inputDateEnd);
-		
-		inputRoom = new JTextField();
-		inputRoom.setForeground(new Color(25, 25, 112));
-		inputRoom.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		inputRoom.setColumns(10);
-		inputRoom.setBorder(new LineBorder(new Color(25, 25, 112)));
-		inputRoom.setBounds(651, 270, 217, 39);
-		add(inputRoom);
-		
 		txtRoom = new JTextField();
-		txtRoom.setText("Ph\u00F2ng h\u1ECDc");
+		txtRoom.setText("Phòng học");
 		txtRoom.setHorizontalAlignment(SwingConstants.CENTER);
 		txtRoom.setForeground(new Color(25, 25, 112));
 		txtRoom.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -162,7 +144,7 @@ public class AddCoursePanel extends JPanel {
 		add(txtRoom);
 		
 		txtTimeStart = new JTextField();
-		txtTimeStart.setText("T\u1EEB");
+		txtTimeStart.setText("Từ");
 		txtTimeStart.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTimeStart.setForeground(new Color(25, 25, 112));
 		txtTimeStart.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -173,16 +155,45 @@ public class AddCoursePanel extends JPanel {
 		txtTimeStart.setBounds(96, 330, 125, 39);
 		add(txtTimeStart);
 		
-		textField_6 = new JTextField();
-		textField_6.setForeground(new Color(25, 25, 112));
-		textField_6.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_6.setColumns(10);
-		textField_6.setBorder(new LineBorder(new Color(25, 25, 112)));
-		textField_6.setBounds(241, 330, 217, 39);
-		add(textField_6);
+		modelDateStart = new UtilDateModel();
+		p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		dateStartPanel = new JDatePanelImpl(modelDateStart, p);
+		datePickerDateStart = new JDatePickerImpl(dateStartPanel, new DateLabelFormatter());
+		datePickerDateStart.setBackground(new Color(255, 255, 255));
+		
+		springLayoutDateStart = (SpringLayout) datePickerDateStart.getLayout();
+		springLayoutDateStart.putConstraint(SpringLayout.NORTH, datePickerDateStart.getJFormattedTextField(), -25, SpringLayout.SOUTH, datePickerDateStart);
+		springLayoutDateStart.putConstraint(SpringLayout.SOUTH, datePickerDateStart.getJFormattedTextField(), 12, SpringLayout.SOUTH, datePickerDateStart);
+		datePickerDateStart.setSize(217, 39);
+		datePickerDateStart.setLocation(241, 207);
+		datePickerDateStart.getJFormattedTextField().setForeground(new Color(25, 25, 112));
+		datePickerDateStart.getJFormattedTextField().setFont(new Font("Tahoma", Font.PLAIN, 16));
+		datePickerDateStart.getJFormattedTextField().setBorder(new LineBorder(new Color(25, 25, 112)));
+		datePickerDateStart.getJFormattedTextField().setBackground(Color.WHITE);
+		add(datePickerDateStart);
+		
+		
+		modelDateEnd = new UtilDateModel();
+		dateEndPanel = new JDatePanelImpl(modelDateEnd, p);
+		datePickerDateEnd = new JDatePickerImpl(dateEndPanel, new DateLabelFormatter());
+		datePickerDateEnd.setBackground(new Color(255, 255, 255));
+		
+		springLayoutDateEnd = (SpringLayout) datePickerDateEnd.getLayout();
+		springLayoutDateEnd.putConstraint(SpringLayout.NORTH, datePickerDateEnd.getJFormattedTextField(), -25, SpringLayout.SOUTH, datePickerDateStart);
+		springLayoutDateEnd.putConstraint(SpringLayout.SOUTH, datePickerDateEnd.getJFormattedTextField(), 12, SpringLayout.SOUTH, datePickerDateStart);
+		datePickerDateEnd.setSize(217, 39);
+		datePickerDateEnd.setLocation(651, 207);
+		datePickerDateEnd.getJFormattedTextField().setForeground(new Color(25, 25, 112));
+		datePickerDateEnd.getJFormattedTextField().setFont(new Font("Tahoma", Font.PLAIN, 16));
+		datePickerDateEnd.getJFormattedTextField().setBorder(new LineBorder(new Color(25, 25, 112)));
+		datePickerDateEnd.getJFormattedTextField().setBackground(Color.WHITE);
+		add(datePickerDateEnd);
 		
 		txtTimeEnd = new JTextField();
-		txtTimeEnd.setText("\u0110\u1EBFn");
+		txtTimeEnd.setText("Đến");
 		txtTimeEnd.setHorizontalAlignment(SwingConstants.CENTER);
 		txtTimeEnd.setForeground(new Color(25, 25, 112));
 		txtTimeEnd.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -192,14 +203,6 @@ public class AddCoursePanel extends JPanel {
 		txtTimeEnd.setBackground(Color.WHITE);
 		txtTimeEnd.setBounds(506, 330, 125, 39);
 		add(txtTimeEnd);
-		
-		textField_8 = new JTextField();
-		textField_8.setForeground(new Color(25, 25, 112));
-		textField_8.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_8.setColumns(10);
-		textField_8.setBorder(new LineBorder(new Color(25, 25, 112)));
-		textField_8.setBounds(651, 330, 217, 39);
-		add(textField_8);
 		
 		txtCourseName = new JTextField();
 		txtCourseName.setText("Tên khóa học");
@@ -213,14 +216,170 @@ public class AddCoursePanel extends JPanel {
 		txtCourseName.setBounds(96, 141, 125, 39);
 		add(txtCourseName);
 		
-		textField_7 = new JTextField();
-		textField_7.setForeground(new Color(25, 25, 112));
-		textField_7.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		textField_7.setColumns(10);
-		textField_7.setBorder(new LineBorder(new Color(25, 25, 112)));
-		textField_7.setBounds(241, 141, 627, 39);
-		add(textField_7);
+		inputCourseName = new JTextField();
+		inputCourseName.setForeground(new Color(25, 25, 112));
+		inputCourseName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		inputCourseName.setColumns(10);
+		inputCourseName.setBorder(new LineBorder(new Color(25, 25, 112)));
+		inputCourseName.setBounds(241, 141, 627, 39);
+		add(inputCourseName);
+		
+		comboBoxSubject = new JComboBox<Subject>();
+		comboBoxSubject.setForeground(new Color(25, 25, 112));
+		comboBoxSubject.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBoxSubject.setBackground(Color.WHITE);
+		comboBoxSubject.setBounds(241, 79, 627, 37);
+		add(comboBoxSubject);
+		
+		List<Subject> subjects = SubjectDAO.getSubjects();
+		for (Subject subject : subjects) {
+			comboBoxSubject.addItem(subject);
+		}
+		
+		comboBoxTimeStart = new JComboBox<Period>(new DefaultComboBoxModel<Period>());
+		comboBoxTimeStart.setForeground(new Color(25, 25, 112));
+		comboBoxTimeStart.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBoxTimeStart.setBackground(Color.WHITE);
+		comboBoxTimeStart.setBounds(241, 331, 217, 37);
+		
+		List<Period> periodList = PeriodDAO.getPeriodList();
+		
+		comboBoxTimeStart.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof Period){
+                	Period period = (Period) value;
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(period.getTimeStart());
+                    setText(sb.toString());
+                }
+                return this;
+            }
+		});
+		
+		for (Period period : periodList) {
+			comboBoxTimeStart.addItem(period);
+		}
+		
+		
+		
+		add(comboBoxTimeStart);
+		
+		comboBoxTimeEnd = new JComboBox<Period>();
+		comboBoxTimeEnd.setForeground(new Color(25, 25, 112));
+		comboBoxTimeEnd.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBoxTimeEnd.setBackground(Color.WHITE);
+		comboBoxTimeEnd.setBounds(651, 331, 217, 37);
+		
+		comboBoxTimeEnd.setRenderer(new DefaultListCellRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof Period){
+                	Period period = (Period) value;
+                    StringBuilder sb = new StringBuilder();
+                    sb.append(period.getTimeEnd());
+                    setText(sb.toString());
+                }
+                return this;
+            }
+		});
+		
+		for (Period period : periodList) {
+			comboBoxTimeEnd.addItem(period);
+		}
+		add(comboBoxTimeEnd);
+		
+		comboBoxRoom = new JComboBox<Room>();
+		comboBoxRoom.setForeground(new Color(25, 25, 112));
+		comboBoxRoom.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBoxRoom.setBackground(Color.WHITE);
+		comboBoxRoom.setBounds(651, 270, 217, 37);
+		
+		List<Room> rooms = RoomDAO.getRooms();
+		for (Room room : rooms) {
+			comboBoxRoom.addItem(room);
+		}
+		
+		add(comboBoxRoom);
+		
+		comboBoxDateLearn = new JComboBox<String>();
+		comboBoxDateLearn.setForeground(new Color(25, 25, 112));
+		comboBoxDateLearn.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		comboBoxDateLearn.setBackground(Color.WHITE);
+		comboBoxDateLearn.setBounds(241, 272, 217, 37);
+		add(comboBoxDateLearn);
+		
+		String[] dateLearnInWeek = { "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy" };
+		
+		for (String date : dateLearnInWeek) {
+			comboBoxDateLearn.addItem(date);
+		}
+		
+		
+		btnAdd = new JButton("Thêm khóa học");
+		btnAdd.setForeground(Color.WHITE);
+		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAdd.setBackground(new Color(25, 25, 112));
+		btnAdd.setBounds(307, 412, 151, 39);
+		btnAdd.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				handleBtnAddClick();
+			}
+		});
+		add(btnAdd);
+		
+		btnBack = new JButton("Quay lại");
+		btnBack.setForeground(Color.WHITE);
+		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnBack.setBackground(new Color(25, 25, 112));
+		btnBack.setBounds(506, 412, 151, 39);
+		btnBack.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				backToCourses();
+			}
+		});
+		add(btnBack);
 
 	}
-
+	
+	public void backToCourses() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showCourses();
+	}
+	
+	public void handleBtnAddClick() {
+		Subject subject = (Subject) comboBoxSubject.getSelectedItem();
+		String courseName = inputCourseName.getText();
+		String dateLearn = (String) comboBoxDateLearn.getSelectedItem();
+		Period periodTimeStart = (Period) comboBoxTimeStart.getSelectedItem();
+		Period periodTimeEnd = (Period) comboBoxTimeEnd.getSelectedItem();
+		LocalDate dateStart = LocalDate.parse(datePickerDateStart.getJFormattedTextField().getText());
+		LocalDate dateEnd = LocalDate.parse(datePickerDateEnd.getJFormattedTextField().getText());
+		Room room = (Room) comboBoxRoom.getSelectedItem();
+		
+		
+		Course course = new Course();
+		course.setCourseName(courseName);
+		course.setDateStart(dateStart);
+		course.setDateEnd(dateEnd);
+		course.setDayInWeek(dateLearn);
+		course.setSubject(subject);
+		course.setPeriodIdStart(periodTimeStart);
+		course.setPeriodIdEnd(periodTimeEnd);
+		course.setRoom(room);
+		
+		Boolean check = CourseDAO.addCourse(course);
+		
+		if (check) {
+			JOptionPane.showMessageDialog(this, "Thêm khóa học thành công");
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Thêm khóa học thất bại");
+		}
+	}
+	
 }

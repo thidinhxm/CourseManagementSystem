@@ -9,6 +9,9 @@ import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+
+import com.thidinhxm.entities.Course;
+
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
@@ -17,16 +20,18 @@ public class ChooseStudentPanel extends JPanel {
 	private JTable tableStudent;
 	private JTextField txtStudent;
 	private JTextField inputStudent;
-
+	
+	private Course course;
+	private JLabel lblTitle;
 	public ChooseStudentPanel() {
 		setBackground(new Color(248, 248, 255));
 		setLayout(null);
 		
-		JLabel lblTitle = new JLabel("Danh sách sinh viên");
+		lblTitle = new JLabel("Chọn sinh viên vào khóa");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(25, 25, 112));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblTitle.setBounds(280, 0, 201, 49);
+		lblTitle.setBounds(17, 0, 723, 49);
 		add(lblTitle);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -89,4 +94,15 @@ public class ChooseStudentPanel extends JPanel {
 
 	}
 	
+	public void displayStudentNotInCourse() {
+		
+	}
+	
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	
+	public void setTitle() {
+		lblTitle.setText("Chọn sinh viên vào khóa " + course.getCourseName());;
+	}
 }

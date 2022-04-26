@@ -32,8 +32,8 @@ public class CoursePanel extends JPanel {
 	private JLabel lblSubjectName;
 	private JLabel lblSubjectId;
 	private JButton btnResultAttendance;
-
-
+	
+	private Course course;
 	public CoursePanel() {
 		setBackground(new Color(255, 255, 255));
 		setLayout(null);
@@ -122,6 +122,8 @@ public class CoursePanel extends JPanel {
 	}
 	
 	public void displayCourse(Course course) {
+		this.course = course;
+		
 		lblTitle.setText("Khóa học: " + course.getCourseName());
 		lblSubjectId.setText("Mã môn học: " + course.getSubject().getSubjectId());
 		lblSubjectName.setText("Tên môn học: " + course.getSubject().getSubjectName());
@@ -152,16 +154,16 @@ public class CoursePanel extends JPanel {
 		});
 	}
 	
-	public void goToAddStudent() {
+	public void goToAddStudent(Course course) {
 		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
-		screen.showAddStudent();
+		screen.showAddStudent(course);
 	}
 	
 	public void setGoToAddStudentBtn() {
 		btnAddStudent.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				goToAddStudent();
+				goToAddStudent(course);
 			}
 		});
 	}

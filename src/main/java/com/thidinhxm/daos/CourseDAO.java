@@ -55,9 +55,6 @@ public class CourseDAO {
 	public static Boolean addCourse(Course course) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Transaction transaction = null;
-		if (CourseDAO.getCourseById(course.getCourseId()) != null) {
-			return false;
-		}
 		try {
 			transaction = session.beginTransaction();
 			session.save(course);

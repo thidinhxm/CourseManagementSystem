@@ -6,13 +6,11 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
+
+import com.thidinhxm.entities.Course;
 
 public class AddNewStudentPanel extends JPanel {
 	private JTextField txtId;
@@ -24,21 +22,21 @@ public class AddNewStudentPanel extends JPanel {
 	private JTextField txtGender;
 	private JTextField inputGender;
 	
-	/**
-	 * Create the panel.
-	 */
+	private Course course;
+	private JLabel lblTitle;
+	private JButton btnAdd;
 	public AddNewStudentPanel() {
 		setBackground(new Color(248, 248, 255));
 		setLayout(null);
 		
-		JLabel lblTitle = new JLabel("Thêm sinh viên mới");
+		lblTitle = new JLabel("Thêm sinh viên mới");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setForeground(new Color(25, 25, 112));
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblTitle.setBounds(280, 0, 201, 49);
+		lblTitle.setBounds(28, 0, 711, 49);
 		add(lblTitle);
 		
-		JButton btnAdd = new JButton("Thêm sinh viên");
+		btnAdd = new JButton("Thêm sinh viên");
 		btnAdd.setForeground(Color.WHITE);
 		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnAdd.setBackground(new Color(25, 25, 112));
@@ -129,5 +127,12 @@ public class AddNewStudentPanel extends JPanel {
 		inputGender.setBounds(319, 313, 288, 39);
 		add(inputGender);
 	}
-
+	
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+	
+	public void setTitle() {
+		lblTitle.setText("Thêm mới sinh viên vào khóa " + course.getCourseName());;
+	}
 }
