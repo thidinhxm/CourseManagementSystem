@@ -7,9 +7,11 @@ import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.ActionListener;
@@ -32,8 +34,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.thidinhxm.daos.AttendanceDAO;
+import com.thidinhxm.daos.StudentCourseDAO;
+import com.thidinhxm.daos.StudentDAO;
+import com.thidinhxm.entities.Attendance;
+import com.thidinhxm.entities.AttendanceId;
 import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.Student;
+import com.thidinhxm.entities.StudentCourse;
 import com.thidinhxm.utils.DateTimeUtil;
 
 public class ImportStudentPanel extends JPanel {
@@ -46,6 +54,7 @@ public class ImportStudentPanel extends JPanel {
 	private Course course;
 	private JLabel lblTitle;
 	private JButton btnDownload;
+	private JButton btnBack;
 	
 	public ImportStudentPanel() {
 		setBackground(new Color(248, 248, 255));
@@ -82,12 +91,6 @@ public class ImportStudentPanel extends JPanel {
 		btnImport.setBounds(387, 46, 184, 39);
 		add(btnImport);
 		
-		btnAdd = new JButton("Thêm sinh viên");
-		btnAdd.setForeground(Color.WHITE);
-		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAdd.setBackground(new Color(25, 25, 112));
-		btnAdd.setBounds(285, 421, 154, 39);
-		add(btnAdd);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(17, 108, 723, 289);
@@ -112,8 +115,37 @@ public class ImportStudentPanel extends JPanel {
 		tableStudent.getColumnModel().getColumn(2).setPreferredWidth(200);
 		tableStudent.getColumnModel().getColumn(3).setPreferredWidth(50);
 		tableStudent.setRowHeight(25);
-		scrollPane.setViewportView(tableStudent);
 		tableStudentModel = (DefaultTableModel) tableStudent.getModel();
+		scrollPane.setViewportView(tableStudent);
+		
+		btnBack = new JButton("Quay lại");
+		btnBack.setForeground(Color.WHITE);
+		btnBack.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnBack.setBackground(new Color(25, 25, 112));
+		btnBack.setBounds(404, 421, 154, 39);
+		add(btnBack);
+		btnBack.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				backToCourse();	
+			}
+			
+		});
+		
+		btnAdd = new JButton("Thêm sinh viên");
+		btnAdd.setForeground(Color.WHITE);
+		btnAdd.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAdd.setBackground(new Color(25, 25, 112));
+		btnAdd.setBounds(200, 422, 154, 39);
+		btnAdd.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				handleBtnAddClick();	
+			}
+			
+		});
+		add(btnAdd);
+		
 	}
 	
 	private void downloadTemplate() {
@@ -203,5 +235,37 @@ public class ImportStudentPanel extends JPanel {
 	
 	public void setTitle() {
 		lblTitle.setText("Thêm sinh viên từ file vào khóa " + course.getCourseName());;
+	}
+	
+	private void backToCourse() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showCourse(course);
+	}
+	
+	private void handleBtnAddClick() {
+		int rowCount = tableStudent.getRowCount();
+		if (rowCount > 0) {
+			int choice = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn thêm sinh viên vào khóa học này?");
+			if (choice == JOptionPane.YES_OPTION) {
+				for (int row = 0; row < rowCount; row++) {
+					String studentId = tableStudent.getValueAt(row, 0) + "";
+					Student student = StudentDAO.getStudentById(studentId);
+					StudentCourse studentCourse = new StudentCourse(student, course);
+					StudentCourseDAO.addStudentToCourse(studentCourse);
+					for (int i = 1; i <= 15; i++) {
+						AttendanceId attendanceId = new AttendanceId(studentCourse.getStudentCourseId(), i);
+						Attendance attendance = new Attendance(attendanceId, studentCourse);
+						AttendanceDAO.addAttendance(attendance);
+						
+					}
+				}
+				JOptionPane.showMessageDialog(this, "Thêm sinh viên thành công");
+				tableStudentModel.setRowCount(0);
+			}
+		}
+		else {
+			JOptionPane.showMessageDialog(this, "Vui lòng import file");
+		}
+		
 	}
 }

@@ -1,7 +1,6 @@
 package com.thidinhxm.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.Embeddable;
 
@@ -16,7 +15,6 @@ public class AttendanceId implements Serializable{
 	}
 
 	public AttendanceId(StudentCourseId studentCourseId, Integer weekLearn) {
-		super();
 		this.studentCourseId = studentCourseId;
 		this.weekLearn = weekLearn;
 	}

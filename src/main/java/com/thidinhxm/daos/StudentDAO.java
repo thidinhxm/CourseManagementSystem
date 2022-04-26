@@ -12,6 +12,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.thidinhxm.entities.Course;
 import com.thidinhxm.entities.Student;
 import com.thidinhxm.utils.HibernateUtil;
 
@@ -160,6 +161,29 @@ public class StudentDAO {
 			session.close();
 		}
 		return students;
+	}
+	
+	public static Boolean addStudent(Student student) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		student.setPassword(BCrypt.hashpw(student.getPassword(), BCrypt.gensalt(10)));
+		try {
+			transaction = session.beginTransaction();
+			session.save(student);
+			transaction.commit();
+		}
+		catch (HibernateException ex) {
+			try {
+				transaction.rollback();
+				return false;
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+			System.err.println(ex);
+		} finally {
+			session.close();
+		}
+		return true;
 	}
 	
 }

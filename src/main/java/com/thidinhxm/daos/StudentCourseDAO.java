@@ -7,8 +7,10 @@ import javax.persistence.NoResultException;
 import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
+import com.thidinhxm.entities.Student;
 import com.thidinhxm.entities.StudentCourse;
 import com.thidinhxm.entities.StudentCourseId;
 import com.thidinhxm.utils.HibernateUtil;
@@ -83,4 +85,27 @@ public class StudentCourseDAO {
 		}
 		return studentCourseList;
 	}
+	
+	public static Boolean addStudentToCourse(StudentCourse studentCourse) {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(studentCourse);
+			transaction.commit();
+		}
+		catch (HibernateException ex) {
+			try {
+				transaction.rollback();
+				return false;
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+			System.err.println(ex);
+		} finally {
+			session.close();
+		}
+		return true;
+	}
+
 }

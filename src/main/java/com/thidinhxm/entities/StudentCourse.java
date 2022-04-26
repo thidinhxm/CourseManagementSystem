@@ -43,6 +43,7 @@ public class StudentCourse {
 	public StudentCourse(Student student, Course course) {
 		this.student = student;
 		this.course = course;
+		this.studentCourseId = new StudentCourseId(student.getStudentId(), course.getCourseId());
 	}
 
 	public StudentCourseId getStudentCourseId() {

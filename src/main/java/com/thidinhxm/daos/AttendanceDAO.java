@@ -6,6 +6,7 @@ import javax.persistence.NoResultException;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import com.thidinhxm.entities.Attendance;
@@ -55,5 +56,27 @@ public class AttendanceDAO {
 			session.close();
 		}
 		return attendance;
+	}
+	
+	public static Boolean addAttendance(Attendance attendance) { 
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.save(attendance);
+			transaction.commit();
+		}
+		catch (HibernateException ex) {
+			try {
+				transaction.rollback();
+				return false;
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+			System.err.println(ex);
+		} finally {
+			session.close();
+		}
+		return true;
 	}
 }

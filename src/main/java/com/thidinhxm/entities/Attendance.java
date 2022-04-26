@@ -29,10 +29,14 @@ public class Attendance {
 	public Attendance() {
 	}
 	public Attendance(AttendanceId attendanceId, Boolean present, LocalDate dateLearn, StudentCourse studentCourse) {
-		super();
 		this.attendanceId = attendanceId;
 		this.present = present;
 		this.dateLearn = dateLearn;
+		this.studentCourse = studentCourse;
+	}
+	
+	public Attendance(AttendanceId attendanceId, StudentCourse studentCourse) {
+		this.attendanceId = attendanceId;
 		this.studentCourse = studentCourse;
 	}
 

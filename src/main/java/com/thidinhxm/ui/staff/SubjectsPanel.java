@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -127,5 +128,11 @@ public class SubjectsPanel extends JPanel {
 		for (Subject subject : subjects) {
 			addSubjectToTable(subject);
 		}
+		
+		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(JLabel.CENTER);
+        for (int columnIndex = 0; columnIndex < tableSubjectModel.getColumnCount(); columnIndex++) {
+        	tableSubject.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
+        }
 	}
 }
