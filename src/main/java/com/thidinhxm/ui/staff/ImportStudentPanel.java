@@ -3,7 +3,6 @@ package com.thidinhxm.ui.staff;
 import java.awt.Color;
 import java.awt.Font;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -162,7 +161,6 @@ public class ImportStudentPanel extends JPanel {
 	
 	private void writeTemplate(String path) {
 		try {
-
 			FileOutputStream file = new FileOutputStream(path);
 			OutputStreamWriter writer = new OutputStreamWriter(file, StandardCharsets.UTF_8);
 			writer.write("MSSV, Ho va ten, Ngay sinh (yyyy-mm-dd), Gioi tinh");

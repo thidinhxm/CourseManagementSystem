@@ -16,6 +16,7 @@ public class CoursesContainerPanel extends JPanel {
 	private CoursePanel coursePane;
 	private AddStudentPanel addStudentPane;
 	private AddCoursePanel addCoursePane;
+	private ResultAttendancePanel resultAttendancePane;
 
 	public CoursesContainerPanel() {
 		setBackground(new Color(255, 255, 255));
@@ -26,11 +27,13 @@ public class CoursesContainerPanel extends JPanel {
 		coursePane = new CoursePanel();
 		addStudentPane = new AddStudentPanel();
 		addCoursePane = new AddCoursePanel();
+		resultAttendancePane = new ResultAttendancePanel();
 		
 		add(coursesPane, "courses");
 		add(coursePane, "course");
 		add(addStudentPane, "add-student");
 		add(addCoursePane, "add-course");
+		add(resultAttendancePane, "result-attendance");
 		
 		cardLayout.show(this, "courses");
 	}
@@ -55,4 +58,13 @@ public class CoursesContainerPanel extends JPanel {
 	public void showAddCourse() {
 		cardLayout.show(this, "add-course");
 	}
+	
+	public void showResultAttendance(Course course) {
+		resultAttendancePane.setCourse(course);
+		resultAttendancePane.setTitle();
+		resultAttendancePane.displayResultAttendance();
+		cardLayout.show(this, "result-attendance");
+	}
+	
+	
 }

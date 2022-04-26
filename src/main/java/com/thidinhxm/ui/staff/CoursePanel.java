@@ -118,6 +118,12 @@ public class CoursePanel extends JPanel {
 		btnResultAttendance.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		btnResultAttendance.setBackground(new Color(25, 25, 112));
 		btnResultAttendance.setBounds(89, 386, 214, 36);
+		btnResultAttendance.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				goToResultAttendance();
+			}
+		});
 		add(btnResultAttendance);
 	}
 	
@@ -141,17 +147,9 @@ public class CoursePanel extends JPanel {
 		screen.showCourses();
 	}
 	
-	private void goToStudentsInCourse(List<StudentCourse> studentCourseList) {
-		
-	}
-	
-	public void setViewStudentsInCourse(final List<StudentCourse> studentCourseList) {
-		btnResultAttendance.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				goToStudentsInCourse(studentCourseList);
-			}
-		});
+	private void goToResultAttendance() {
+		StaffScreen screen = (StaffScreen) SwingUtilities.windowForComponent(this);
+		screen.showResultAttendance(course);
 	}
 	
 	public void goToAddStudent(Course course) {

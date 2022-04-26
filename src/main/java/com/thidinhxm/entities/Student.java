@@ -98,4 +98,8 @@ public class Student {
 		return studentCourse;
 	}
 	
+	public String toString() {
+		return studentId + "-" + fullname;
+	}
+	
 }

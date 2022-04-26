@@ -224,6 +224,10 @@ public class StaffScreen extends JFrame {
 		coursesContainerPane.showAddCourse();
 	}
 	
+	public void showResultAttendance(Course course) {
+		coursesContainerPane.showResultAttendance(course);
+	}
+	
 	public void showSubjects() {
 		cardLayout.show(mainPane, "subjects");
 	}
