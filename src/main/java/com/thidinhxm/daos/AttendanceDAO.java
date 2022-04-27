@@ -1,5 +1,6 @@
 package com.thidinhxm.daos;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,16 +40,17 @@ public class AttendanceDAO {
 		
 	}
 	
-	public static Attendance getCurrentAttendance(String studentId) {
+	public static Attendance getCurrentAttendance(String studentId, Integer courseId) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
 		Attendance attendance = null;
+		StudentCourseId studentCourseId = new StudentCourseId(studentId, courseId);
 		try {
-			String hql = "select a from Attendance a inner join Course c on a.attendanceId.studentCourseId.courseId = c.courseId"
-					+ " where a.attendanceId.studentCourseId.studentId = :studentId"
-					+ "and Date(a.attendanceId.dateLearn) = Date(current_date())"
-					+ "and c.";
+			String hql = "from Attendance a where a.attendanceId.studentCourseId = :studentCourseId "
+					+ "and a.dateLearn = current_date "
+					+ "and (a.present is null or a.present = false)";
+			
 			Query<Attendance> query = session.createQuery(hql, Attendance.class);
-			query.setParameter("studentId", studentId);
+			query.setParameter("studentCourseId", studentCourseId);
 			attendance = query.getSingleResult();
 		}
 		catch (NoResultException ex) {
@@ -123,4 +125,5 @@ public class AttendanceDAO {
 		}
 		return attendance;
 	}
+	
 }

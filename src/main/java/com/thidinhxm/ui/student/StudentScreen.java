@@ -102,6 +102,7 @@ public class StudentScreen extends JFrame {
 		
 
 		lblAccount = new JLabel("Tài khoản");
+		lblAccount.setBackground(new Color(255, 255, 255));
 		lblAccount.setBounds(0, 0, 182, 41);
 		txtAccountPane.add(lblAccount);
 		lblAccount.setVerticalAlignment(SwingConstants.CENTER);
@@ -125,7 +126,7 @@ public class StudentScreen extends JFrame {
 		txtAttendancePane.setLayout(null);
 		
 		lblAttendance = new JLabel("Điểm danh");
-		lblAttendance.setBackground(new Color(248, 248, 255));
+		lblAttendance.setBackground(new Color(255, 255, 255));
 		lblAttendance.setBounds(0, 0, 182, 41);
 		txtAttendancePane.add(lblAttendance);
 		lblAttendance.setVerticalAlignment(SwingConstants.CENTER);
@@ -139,6 +140,7 @@ public class StudentScreen extends JFrame {
 				txtAttendancePane.setBackground(THIRD_COLOR);
 				lblAttendance.setForeground(Color.WHITE);
 				cardLayout.show(mainPane, "attendance");
+				attendancePane.updateLayout();
 			}
 		});
 		
@@ -184,6 +186,7 @@ public class StudentScreen extends JFrame {
 		mainPane.setLayout(cardLayout);
 		
 		attendancePane = new AttendancePanel();
+		attendancePane.setStudent(student);
 		accountPane = new AccountPanel();
 		accountPane.setStudentAccount(student);
 		coursesContainerPane = new CoursesContainerPanel(student.getStudentId());
@@ -223,6 +226,10 @@ public class StudentScreen extends JFrame {
 		cardLayout.show(mainPane, "courses-container");
 	}
 	
+	public void showChangePassword() {
+		cardLayout.show(mainPane, "password");
+	}
+	
 	public Student getStudent() {
 		return student;
 	}
@@ -239,7 +246,5 @@ public class StudentScreen extends JFrame {
 		coursesContainerPane.showAttendanceResult(attendanceList);
 	}
 	
-	public void showChangePassword() {
-		cardLayout.show(mainPane, "password");
-	}
+	
 }
